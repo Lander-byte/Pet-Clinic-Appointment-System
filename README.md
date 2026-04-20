@@ -23,15 +23,19 @@ Invoice
 Payment
 Service
 
-Member 1 — User Domain (Abstract & Subclasses)
+ROJ — User Domain (Abstract & Subclasses)
 Classes: User (abstract), Owner, Veterinarian, Staff
-This member handles the entire user hierarchy — the abstract parent and all three concrete subclasses with their specific attributes and behaviors.Member 2 — Pet & Medical Domain
+This member handles the entire user hierarchy — the abstract parent and all three concrete subclasses with their specific attributes and behaviors.
+STEVEN — Pet & Medical Domain
 Classes: Pet, MedicalHistory, Species (enum)
-This member manages everything about the animals — pet info, species categorization, and the medical history record attached to each pet.Member 3 — Scheduling Domain
+This member manages everything about the animals — pet info, species categorization, and the medical history record attached to each pet.
+SAIRA — Scheduling Domain
 Classes: Appointment, Schedule, Timeslot
-This member handles all time-related logic — how appointments are created, how a clinic's schedule is structured, and the individual timeslots within it.Member 4 — Clinical Domain
+This member handles all time-related logic — how appointments are created, how a clinic's schedule is structured, and the individual timeslots within it.
+BRANDON — Clinical Domain
 Classes: TreatmentPlan, Diagnosis, Medication, Procedure
-This member covers the clinical/medical side of a visit — what was diagnosed, what treatment is prescribed, what medications and procedures are involved.Member 5 — Billing Domain
+This member covers the clinical/medical side of a visit — what was diagnosed, what treatment is prescribed, what medications and procedures are involved.
+LANHCE — Billing Domain
 Classes: Invoice, Payment, Service
 This member handles the financial layer — what services were rendered, how they're billed, and how payments are processed.
 
