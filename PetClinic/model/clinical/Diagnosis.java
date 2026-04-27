@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+package PetClinic.model.clinical;
 
 public class Diagnosis {
     private String condition;
@@ -15,6 +14,6 @@ public class Diagnosis {
 
     @Override
     public String toString() {
-        return "Diagnosis: " + condition + " (" + notes + ")";
+        return "PetClinic.model.clinical.Diagnosis: " + condition + " (" + notes + ")";
     }
 }

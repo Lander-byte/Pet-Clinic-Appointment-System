@@ -1,3 +1,5 @@
+package PetClinic.model.clinical;
+
 public class TreatmentPlan {
     private Diagnosis diagnosis;
     private List<Medication> medications;

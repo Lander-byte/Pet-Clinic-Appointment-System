@@ -1,3 +1,5 @@
+package PetClinic.model.clinical;
+
 public class Medication {
     private String name;
     private String dosage;   
@@ -15,7 +17,7 @@ public class Medication {
 
     @Override
     public String toString() {
-        return "Medication: " + name + " | Dosage: " + dosage +
+        return "PetClinic.model.clinical.Medication: " + name + " | Dosage: " + dosage +
                " | Duration: " + durationDays + " days";
     }
 }

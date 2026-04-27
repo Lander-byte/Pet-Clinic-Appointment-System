@@ -15,10 +15,10 @@ Species - (Enum)
 Appointment
 Schedule
 Timeslot
-TreatmentPlan
-Diagnosis
-Medication
-Procedure
+PetClinic.model.clinical.TreatmentPlan
+PetClinic.model.clinical.Diagnosis
+PetClinic.model.clinical.Medication
+PetClinic.model.clinical.Procedure
 Invoice
 Payment
 Service
@@ -33,7 +33,7 @@ SAIRA — Scheduling Domain
 Classes: Appointment, Schedule, Timeslot
 This member handles all time-related logic — how appointments are created, how a clinic's schedule is structured, and the individual timeslots within it.
 BRANDON — Clinical Domain
-Classes: TreatmentPlan, Diagnosis, Medication, Procedure
+Classes: PetClinic.model.clinical.TreatmentPlan, PetClinic.model.clinical.Diagnosis, PetClinic.model.clinical.Medication, PetClinic.model.clinical.Procedure
 This member covers the clinical/medical side of a visit — what was diagnosed, what treatment is prescribed, what medications and procedures are involved.
 LANHCE — Billing Domain
 Classes: Invoice, Payment, Service
