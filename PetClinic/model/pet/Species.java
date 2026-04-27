@@ -1,17 +1,16 @@
-package PetClinic.model.pet;
+package model.pet;
 
 public enum Species {
     DOG,
     CAT,
-    BIRD,
-    RABBIT,
-    HAMSTER,
-    REPTILE,
-    FISH,
-    OTHER;
+    AQUATIC,    // fish, turtles, frogs, etc.
+    MAMMAL,     // rabbits, hamsters, guinea pigs, etc.
+    BIRD,       // parrots, ducks, chickens, etc.
+    FARM_ANIMAL; // goats, sheep, horses, pigs, etc.
 
     @Override
     public String toString() {
-        return name().charAt(0) + name().substring(1).toLowerCase();
+        String name = name().replace("_", " ");
+        return name.charAt(0) + name.substring(1).toLowerCase();
     }
 }
