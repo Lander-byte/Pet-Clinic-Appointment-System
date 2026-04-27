@@ -1,4 +1,4 @@
-/*import model.user.Owner;
+import model.user.Owner;
 import model.user.Veterinarian;
 import model.user.Staff;
 import model.pet.Pet;
@@ -10,7 +10,7 @@ import model.scheduling.Appointment;
 import model.clinical.PetClinic.model.clinical.Diagnosis;
 import model.clinical.PetClinic.model.clinical.Medication;
 import model.clinical.PetClinic.model.clinical.Procedure;
-import model.clinical.PetClinic.model.clinical.TreatmentPlan;*/
+import model.clinical.PetClinic.model.clinical.TreatmentPlan;
 import PetClinic.model.billing.Service;
 import PetClinic.model.billing.Invoice;
 import PetClinic.model.billing.Payment;
