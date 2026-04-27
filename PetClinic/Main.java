@@ -19,6 +19,9 @@ public class Main {
     public static void main(String[] args) {
 
         // ── STEVEN: Create a pet ──────────────────────────────
+        Owner owner = new Owner("Maria", "0917-555-1234");
+        Pet pet = new Pet("Doggo", Species.DOG, owner);
+        MedicalHistory history = new MedicalHistory(pet);
 
 
         // ── ROJ: Create clinic staff ───────────────────────────
