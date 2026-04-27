@@ -25,7 +25,8 @@ public class Main {
 
 
         // ── ROJ: Create clinic staff ───────────────────────────
-
+        Veterinarian vet = new Veterinarian("Dr. Smith", "smith@clinic.com");
+        Staff staff = new Staff("Jane", "jane@clinic.com");
 
         // ── SAIRA: Set up schedule & book appointment ──────────
 
