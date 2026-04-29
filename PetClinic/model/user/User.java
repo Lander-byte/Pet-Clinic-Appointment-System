@@ -1,4 +1,4 @@
-package users;
+package PetClinic.model.user;
 
 public abstract class User {
     private static int idCounter = 1000;

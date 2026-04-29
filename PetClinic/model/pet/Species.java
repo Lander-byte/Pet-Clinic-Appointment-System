@@ -1,4 +1,4 @@
-package model.pet;
+package PetClinic.model.pet;
 
 public enum Species {
     DOG,
