@@ -1,4 +1,4 @@
-package model.scheduling;
+package PetClinic.model.scheduling;
 
 public class Timeslot {
     private String startTime;
