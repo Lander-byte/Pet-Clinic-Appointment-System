@@ -8,6 +8,11 @@ public class Veterinarian extends User {
         this.specialization = specialization;
     }
 
+    public Veterinarian(String name, String specialization, String username, String password) {
+        super(name, "", "", "", username, password);
+        this.specialization = specialization;
+    }
+
     public String getSpecialization() {
         return specialization;
     }
@@ -17,7 +22,12 @@ public class Veterinarian extends User {
     }
 
     @Override
+    public String getRole() {
+        return "Veterinarian";
+    }
+
+    @Override
     public String toString() {
-        return "Veterinarian[name=" + name + ", specialization=" + specialization + "]";
+        return "Veterinarian[name=" + getName() + ", specialization=" + specialization + "]";
     }
 }
