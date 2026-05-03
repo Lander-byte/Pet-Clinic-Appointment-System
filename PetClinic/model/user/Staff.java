@@ -8,6 +8,11 @@ public class Staff extends User {
         this.role = role;
     }
 
+    public Staff(String name, String role, String username, String password) {
+        super(name, "", "", "", username, password);
+        this.role = role;
+    }
+
     public String getRole() {
         return role;
     }
@@ -18,6 +23,6 @@ public class Staff extends User {
 
     @Override
     public String toString() {
-        return "Staff[name=" + name + ", role=" + role + "]";
+        return "Staff[name=" + getName() + ", role=" + role + "]";
     }
 }
