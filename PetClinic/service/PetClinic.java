@@ -1,7 +1,7 @@
 package service;
 
-import model.pet.Pet;
-import model.scheduling.Appointment;
+import PetClinic.model.pet.Pet;
+import PetClinic.model.scheduling.Appointment;
 import java.util.ArrayList;
 import java.util.List;
 

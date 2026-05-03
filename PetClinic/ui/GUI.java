@@ -1,4 +1,4 @@
-package ui;
+package PetClinic.ui;
 
 public class GUI {
     // TODO: Implement graphical user interface

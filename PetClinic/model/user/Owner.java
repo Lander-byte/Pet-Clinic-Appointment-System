@@ -1,4 +1,4 @@
-package model.user;
+package PetClinic.model.user;
 
 public class Owner extends User {
     private String contactNumber;

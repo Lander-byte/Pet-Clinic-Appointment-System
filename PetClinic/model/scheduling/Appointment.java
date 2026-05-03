@@ -1,8 +1,8 @@
 package PetClinic.model.scheduling;
 
-import model.pet.Pet;
-import model.user.Veterinarian;
-import model.clinical.TreatmentPlan;
+import PetClinic.model.pet.Pet;
+import PetClinic.model.user.Veterinarian;
+import PetClinic.model.clinical.TreatmentPlan;
 
 public class Appointment {
     private pet pet;

@@ -1,4 +1,4 @@
-package model.user;
+package PetClinic.model.user;
 
 public class Staff extends User {
     private String role;

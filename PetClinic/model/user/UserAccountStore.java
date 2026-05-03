@@ -1,4 +1,4 @@
-package model.user;
+package PetClinic.model.user;
 
 import java.util.ArrayList;
 import java.util.Collections;

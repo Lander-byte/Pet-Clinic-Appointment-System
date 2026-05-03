@@ -1,4 +1,4 @@
-package ui.screens;
+package PetClinic.ui.screens;
 
 import ui.components.FloatingInput;
 import ui.components.RoundedPanel;

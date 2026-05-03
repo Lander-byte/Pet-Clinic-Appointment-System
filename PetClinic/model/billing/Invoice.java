@@ -1,6 +1,6 @@
 package PetClinic.model.billing;
 
-import model.scheduling.Appointment;
+import PetClinic.model.scheduling.Appointment;
 
 public class Invoice {
     private Appointment appointment;

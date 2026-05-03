@@ -1,4 +1,4 @@
-package model.user;
+package PetClinic.model.user;
 
 public class Veterinarian extends User {
     private String specialization;

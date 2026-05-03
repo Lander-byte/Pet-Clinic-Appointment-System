@@ -1,6 +1,6 @@
-package service;
+package PetClinic.service;
 
-import model.scheduling.Appointment;
+import PetClinic.model.scheduling.Appointment;
 import java.util.ArrayList;
 import java.util.List;
 
