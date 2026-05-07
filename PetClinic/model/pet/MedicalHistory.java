@@ -1,6 +1,7 @@
 package model.pet;
 
 import model.clinical.TreatmentPlan;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,6 @@ public class MedicalHistory {
     private Date lastVisit;
     private String notes;
 
-    
     public MedicalHistory(Pet pet) {
         this.pet            = pet;
         this.vaccinations   = new ArrayList<>();
@@ -24,23 +24,19 @@ public class MedicalHistory {
         this.notes          = "";
     }
 
-    // Getters
-    public Pet getPet()                              { return pet; }
-    public List<String> getVaccinations()            { return vaccinations; }
-    public List<String> getAllergies()               { return allergies; }
-    public List<TreatmentPlan> getTreatmentPlans()  { return treatmentPlans; }
-    public Date getLastVisit()                       { return lastVisit; }
-    public String getNotes()                         { return notes; }
+    public Pet getPet()                             { return pet; }
+    public List<String> getVaccinations()           { return vaccinations; }
+    public List<String> getAllergies()              { return allergies; }
+    public List<TreatmentPlan> getTreatmentPlans() { return treatmentPlans; }
+    public Date getLastVisit()                      { return lastVisit; }
+    public String getNotes()                        { return notes; }
 
-    // Setters
     public void setLastVisit(Date lastVisit) { this.lastVisit = lastVisit; }
     public void setNotes(String notes)       { this.notes = notes; }
 
-    // Add methods
     public void addVaccination(String vaccination) { this.vaccinations.add(vaccination); }
     public void addAllergy(String allergy)         { this.allergies.add(allergy); }
 
-    // Matching Main.java: history.addTreatmentPlan(plan)
     public void addTreatmentPlan(TreatmentPlan plan) {
         this.treatmentPlans.add(plan);
         this.lastVisit = new Date();
