@@ -15,7 +15,6 @@ public class Pet {
     private String gender;
     private Owner owner;
 
-
     public Pet(String name, Species species, Owner owner) {
         this.petId   = idCounter++;
         this.name    = name;
@@ -27,7 +26,6 @@ public class Pet {
         this.gender  = "Unknown";
     }
 
-    // Full constructor
     public Pet(String name, Species species, Owner owner,
                String breed, int age, double weight, String gender) {
         this.petId   = idCounter++;
@@ -40,24 +38,22 @@ public class Pet {
         this.gender  = gender;
     }
 
-    // Getters
-    public int getPetId()        { return petId; }
-    public String getName()      { return name; }
-    public Species getSpecies()  { return species; }
-    public String getBreed()     { return breed; }
-    public int getAge()          { return age; }
-    public double getWeight()    { return weight; }
-    public String getGender()    { return gender; }
-    public Owner getOwner()      { return owner; }
+    public int getPetId()       { return petId; }
+    public String getName()     { return name; }
+    public Species getSpecies() { return species; }
+    public String getBreed()    { return breed; }
+    public int getAge()         { return age; }
+    public double getWeight()   { return weight; }
+    public String getGender()   { return gender; }
+    public Owner getOwner()     { return owner; }
 
-    // Setters
-    public void setName(String name)         { this.name = name; }
-    public void setSpecies(Species species)  { this.species = species; }
-    public void setBreed(String breed)       { this.breed = breed; }
-    public void setAge(int age)              { this.age = age; }
-    public void setWeight(double weight)     { this.weight = weight; }
-    public void setGender(String gender)     { this.gender = gender; }
-    public void setOwner(Owner owner)        { this.owner = owner; }
+    public void setName(String name)        { this.name = name; }
+    public void setSpecies(Species species) { this.species = species; }
+    public void setBreed(String breed)      { this.breed = breed; }
+    public void setAge(int age)             { this.age = age; }
+    public void setWeight(double weight)    { this.weight = weight; }
+    public void setGender(String gender)    { this.gender = gender; }
+    public void setOwner(Owner owner)       { this.owner = owner; }
 
     public void displayInfo() {
         System.out.println("-----------------------------");
