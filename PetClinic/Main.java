@@ -16,9 +16,11 @@ import PetClinic.model.clinical.TreatmentPlan;
 import PetClinic.model.billing.Service;
 import PetClinic.model.billing.Invoice;
 import PetClinic.model.billing.Payment;
+import PetClinic.ui.GUI;
 
 public class  Main {
     public static void main(String[] args) {
+        new GUI().launch();
 
         // ── STEVEN: Create a pet ──────────────────────────────
         Owner owner = new Owner("Maria", "0917-555-1234");
