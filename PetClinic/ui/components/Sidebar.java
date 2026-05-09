@@ -1,4 +1,4 @@
-package ui.components;
+package PetClinic.ui.components;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 
 public class Sidebar extends JPanel {
     private static final int COLLAPSED = 70;
+    private final String adminDashboardTarget;
     private static final int EXPANDED = 200;
 
     private final Consumer<String> navigator;
@@ -28,8 +29,9 @@ public class Sidebar extends JPanel {
     private Timer timer;
     private String activeTab = "Overview";
 
-    public Sidebar(Consumer<String> navigator, String landingTarget) {
+    public Sidebar(Consumer<String> navigator, String adminDashboardTarget, String landingTarget) {
         this.navigator = navigator;
+        this.adminDashboardTarget = adminDashboardTarget;
         this.landingTarget = landingTarget;
         setLayout(null);
         setBackground(UiTheme.BLUE);

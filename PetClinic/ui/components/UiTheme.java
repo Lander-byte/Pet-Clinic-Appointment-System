@@ -1,4 +1,4 @@
-package ui.components;
+package PetClinic.ui.components;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;

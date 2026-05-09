@@ -1,13 +1,13 @@
-package ui.screens;
+package PetClinic.ui.screens;
 
-import ui.components.FloatingInput;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 import javax.swing.*;
 import java.awt.*;
 
-public class SettingsScreen extends JPanel {
-    public SettingsScreen() {
+public class UserSettingScreen extends JPanel {
+    public UserSettingScreen() {
         setLayout(new BorderLayout());
         setBackground(UiTheme.BG_LIGHT);
         setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));

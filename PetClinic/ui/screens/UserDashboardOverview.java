@@ -1,15 +1,15 @@
-package ui.screens;
+package PetClinic.ui.screens;
 
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class DashboardOverview extends JPanel {
-    public DashboardOverview() {
+public class UserDashboardOverview extends JPanel {
+    public UserDashboardOverview() {
         setLayout(new BorderLayout(0, 30));
         setBackground(UiTheme.BG_LIGHT);
         setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));

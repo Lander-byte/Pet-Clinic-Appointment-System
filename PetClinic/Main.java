@@ -1,9 +1,11 @@
+package PetClinic;
+
 import PetClinic.model.user.Owner;
 import PetClinic.model.user.Veterinarian;
 import PetClinic.model.user.Staff;
-//import PetClinic.model.pet.Pet;
+import PetClinic.model.pet.Pet;
 import PetClinic.model.pet.Species;
-//import PetClinic.model.pet.MedicalHistory;
+import PetClinic.model.pet.MedicalHistory;
 import PetClinic.model.scheduling.Schedule;
 import PetClinic.model.scheduling.Timeslot;
 import PetClinic.model.scheduling.Appointment;
@@ -15,12 +17,12 @@ import PetClinic.model.billing.Service;
 import PetClinic.model.billing.Invoice;
 import PetClinic.model.billing.Payment;
 
-public class Main {
+public class  Main {
     public static void main(String[] args) {
 
         // ── STEVEN: Create a pet ──────────────────────────────
         Owner owner = new Owner("Maria", "0917-555-1234");
-        Pet pet = new Pet("Doggo", Species.DOG, owner);
+        Pet pet = new Pet("Doggo", Species.MAMMAL, owner);
         MedicalHistory history = new MedicalHistory(pet);
 
 
@@ -29,6 +31,10 @@ public class Main {
         Staff staff = new Staff("Jane", "jane@clinic.com");
 
         // ── SAIRA: Set up schedule & book appointment ──────────
+        Schedule schedule = new Schedule(vet);
+        Timeslot slot = new Timeslot("2025-06-01", "10:00 AM");
+        Appointment appointment = new Appointment(pet, vet, slot, "pending");
+        schedule.addAppointment(appointment);
 
 
         // ── BRANDON: Clinical outcome ──────────────────────────

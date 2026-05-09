@@ -5,7 +5,7 @@ import PetClinic.model.user.Veterinarian;
 import PetClinic.model.clinical.TreatmentPlan;
 
 public class Appointment {
-    private pet pet;
+    private Pet pet;
     private Veterinarian vet;
     private Timeslot timeslot;
     private String reason;
@@ -13,7 +13,7 @@ public class Appointment {
     private TreatmentPlan treatmentPlan;
 
     public Appointment(Pet pet, Veterinarian vet, Timeslot timeslot, String reason) {
-        this.pet      = pet;
+        this.pet     = pet;
         this.vet      = vet;
         this.timeslot = timeslot;
         this.reason   = reason;
@@ -21,7 +21,7 @@ public class Appointment {
         timeslot.setAvailable(false);
     }
 
-    public pet getPet()                        { return pet; }
+    public Pet getPet()                        { return pet; }
     public Veterinarian getVet()               { return vet; }
     public Timeslot getTimeslot()              { return timeslot; }
     public String getReason()                  { return reason; }

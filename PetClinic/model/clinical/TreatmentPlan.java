@@ -1,4 +1,6 @@
 package PetClinic.model.clinical;
+import java.util.List;
+import java.util.ArrayList;
 
 public class TreatmentPlan {
     private Diagnosis diagnosis;

@@ -1,13 +1,13 @@
-package ui;
+package PetClinic.ui;
 
-import model.user.User;
-import model.user.UserAccountStore;
-import ui.components.FloatingInput;
-import ui.screens.AdminLoginScreen;
-import ui.screens.DashboardScreen;
-import ui.screens.LandingScreen;
-import ui.screens.UserLoginScreen;
-import ui.screens.UserRegisterScreen;
+import PetClinic.model.user.User;
+import PetClinic.model.user.UserAccountStore;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.screens.AdminLoginScreen;
+import PetClinic.ui.screens.DashboardScreen;
+import PetClinic.ui.screens.LandingScreen;
+import PetClinic.ui.screens.UserLoginScreen;
+import PetClinic.ui.screens.UserRegisterScreen;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -57,8 +57,8 @@ public class GUI {
         cards.add(new AdminLoginScreen(this::loginAdmin), ADMIN_LOGIN);
         
         // Updated Dashboard instances with the new 3-argument constructor
-        cards.add(new DashboardScreen(true, this::show, LANDING), ADMIN_DASHBOARD);
-        cards.add(new DashboardScreen(false, this::show, LANDING), USER_DASHBOARD);
+        cards.add(new DashboardScreen(true, this::show, ADMIN_DASHBOARD, LANDING), ADMIN_DASHBOARD);
+        cards.add(new DashboardScreen(false, this::show, USER_DASHBOARD, LANDING), USER_DASHBOARD);
 
         frame.setContentPane(cards);
         frame.pack();

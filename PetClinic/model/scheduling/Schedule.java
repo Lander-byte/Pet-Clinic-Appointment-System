@@ -1,13 +1,15 @@
 package PetClinic.model.scheduling;
 
-
+import PetClinic.model.user.Veterinarian;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Schedule {
+    private Veterinarian vet;
     private List<Appointment> appointments;
 
-    public Schedule() {
+    public Schedule(Veterinarian vet) {
+        this.vet = vet;
         this.appointments = new ArrayList<>();
     }
 

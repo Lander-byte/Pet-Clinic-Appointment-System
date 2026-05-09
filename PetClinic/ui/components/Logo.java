@@ -1,4 +1,4 @@
-package ui.components;
+package PetClinic.ui.components;
 
 import javax.swing.JPanel;
 import java.awt.BasicStroke;

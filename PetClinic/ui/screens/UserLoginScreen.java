@@ -1,9 +1,9 @@
 package PetClinic.ui.screens;
 
-import ui.components.FloatingInput;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
-import ui.components.WhiteUnderline;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
+import PetClinic.ui.components.WhiteUnderline;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;

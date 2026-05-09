@@ -1,8 +1,8 @@
-package ui.screens;
+package PetClinic.ui.screens;
 
-import ui.components.FloatingInput;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -11,11 +11,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class AppointmentsScreen extends JPanel {
+public class UserAppointmentScreen extends JPanel {
     private final DefaultTableModel model;
     private final JTable table;
 
-    public AppointmentsScreen() {
+    public UserAppointmentScreen() {
         setLayout(new BorderLayout(0, 30));
         setBackground(UiTheme.BG_LIGHT);
         setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));

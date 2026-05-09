@@ -1,19 +1,19 @@
-package ui.screens;
+package PetClinic.ui.screens;
 
-import ui.components.FloatingInput;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class CustomersScreen extends JPanel {
+public class UserCustomerScreen extends JPanel {
     private final DefaultTableModel model;
     private int nextId = 1005;
 
-    public CustomersScreen() {
+    public UserCustomerScreen() {
         setLayout(new BorderLayout(0, 30));
         setBackground(UiTheme.BG_LIGHT);
         setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));

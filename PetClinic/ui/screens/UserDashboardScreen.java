@@ -1,7 +1,7 @@
-package ui.screens;
+package PetClinic.ui.screens;
 
-import ui.components.Sidebar;
-import ui.components.UiTheme;
+import PetClinic.ui.components.Sidebar;
+import PetClinic.ui.components.UiTheme;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,13 +11,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.function.Consumer;
 
-public class DashboardScreen extends JPanel {
+public class UserDashboardScreen extends JPanel {
     private final CardLayout cardLayout;
     private final JPanel contentCards;
     private final Consumer<String> topLevelNavigator;
     private final String logoutTarget;
 
-    public DashboardScreen(boolean admin, Consumer<String> topLevelNavigator, String logoutTarget) {
+    public UserDashboardScreen(boolean admin, Consumer<String> topLevelNavigator, String logoutTarget) {
         super(new BorderLayout());
         this.topLevelNavigator = topLevelNavigator;
         this.logoutTarget = logoutTarget;
@@ -28,12 +28,12 @@ public class DashboardScreen extends JPanel {
         contentCards.setOpaque(false);
 
         // Add real internal dashboard screens
-        contentCards.add(new DashboardOverview(), "Overview");
-        contentCards.add(new AppointmentsScreen(), "Appointments");
-        contentCards.add(new CustomersScreen(), "Customers");
-        contentCards.add(new SettingsScreen(), "Settings");
+        contentCards.add(new UserDashboardOverview(), "Overview");
+        contentCards.add(new UserAppointmentScreen(), "Appointments");
+        contentCards.add(new UserCustomerScreen(), "Customers");
+        contentCards.add(new UserSettingScreen(), "Settings");
 
-        Sidebar sidebar = new Sidebar(this::handleNavigation, logoutTarget);
+        Sidebar sidebar = new Sidebar(this::handleNavigation, logoutTarget, "YOUR_THIRD_ARG");
         add(sidebar, BorderLayout.WEST);
         add(contentCards, BorderLayout.CENTER);
         
