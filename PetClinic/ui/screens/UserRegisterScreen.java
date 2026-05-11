@@ -15,9 +15,8 @@ import java.awt.Font;
 public class UserRegisterScreen extends JPanel {
     private static final int DEFAULT_WIDTH = 940;
     private static final int DEFAULT_HEIGHT = 670;
-    private static final int FIELD_WIDTH = 200;
-    private static final int FIELD_HEIGHT = 34;
-
+    private static final int FIELD_WIDTH = 280;
+    private static final int FIELD_HEIGHT = 48;
     private final JPanel bluePanel;
     private final JPanel registerForm;
     private final JLabel welcomeTitle;
@@ -25,7 +24,6 @@ public class UserRegisterScreen extends JPanel {
     private final JLabel welcomeBody;
     private final JButton backToLogin;
     private final JLabel title;
-    private final JLabel note;
     private final FloatingInput username;
     private final FloatingInput email;
     private final FloatingInput pass;
@@ -33,95 +31,75 @@ public class UserRegisterScreen extends JPanel {
     private final JButton register;
 
     public UserRegisterScreen(RegisterHandler onRegister, Runnable onLogin) {
-        setLayout(null);
-        setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-
-        bluePanel = new JPanel(null);
-        bluePanel.setBackground(UiTheme.BLUE);
-        add(bluePanel);
-
-        welcomeTitle = UiTheme.centeredLabel("Welcome Back!", UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 24f), Color.WHITE);
-        bluePanel.add(welcomeTitle);
-
-        underline = new WhiteUnderline();
-        bluePanel.add(underline);
-
-        welcomeBody = UiTheme.centeredLabel("<html><div style='text-align:center;'>Already have an Account?<br>Sign in your registered account and<br>start using CareHaven.</div></html>",
-                UiTheme.BODY_FONT.deriveFont(10f), Color.WHITE);
-        bluePanel.add(welcomeBody);
-
-        backToLogin = UiTheme.outlineButton("Sign In");
-        backToLogin.addActionListener(e -> onLogin.run());
-        bluePanel.add(backToLogin);
-
-        registerForm = new RoundedPanel(Color.WHITE, 24);
-        registerForm.setLayout(null);
-        registerForm.setBackground(Color.WHITE);
-        add(registerForm);
-
-        title = UiTheme.centeredLabel("Register your Account", UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 24f), UiTheme.TEXT_BLUE);
-        registerForm.add(title);
-
-        note = UiTheme.centeredLabel("fill up the information provided", UiTheme.BODY_FONT.deriveFont(9f), Color.BLACK);
-        registerForm.add(note);
-
-        username = new FloatingInput("Username", false);
-        registerForm.add(username);
-
-        email = new FloatingInput("Email", false);
-        registerForm.add(email);
-
-        pass = new FloatingInput("Password", true);
-        registerForm.add(pass);
-
-        confirm = new FloatingInput("Confirm Password", true);
-        registerForm.add(confirm);
-
-        register = UiTheme.pillButton("Register", UiTheme.BLUE, Color.WHITE, 10);
-        register.addActionListener(e -> onRegister.register(username, email, pass, confirm));
-        registerForm.add(register);
+        this.setLayout((LayoutManager)null);
+        this.setBackground(Color.WHITE);
+        this.setPreferredSize(new Dimension(940, 670));
+        this.bluePanel = new RoundedPanel(UiTheme.BLUE, 0);
+        this.bluePanel.setLayout((LayoutManager)null);
+        this.add(this.bluePanel);
+        this.welcomeTitle = UiTheme.centeredLabel("Welcome Back!", UiTheme.TITLE_FONT.deriveFont(1, 32.0F), Color.WHITE);
+        this.bluePanel.add(this.welcomeTitle);
+        this.underline = new WhiteUnderline();
+        this.bluePanel.add(this.underline);
+        this.welcomeBody = UiTheme.centeredLabel("<html><div style='text-align:center;'>To keep connected with us please<br>login with your personal info.</div></html>", UiTheme.BODY_FONT.deriveFont(14.0F), Color.WHITE);
+        this.bluePanel.add(this.welcomeBody);
+        this.backToLogin = UiTheme.pillButton("SIGN IN", Color.WHITE, UiTheme.BLUE, 14);
+        this.backToLogin.addActionListener((e) -> onLogin.run());
+        this.bluePanel.add(this.backToLogin);
+        this.registerForm = new JPanel((LayoutManager)null);
+        this.registerForm.setOpaque(false);
+        this.add(this.registerForm);
+        this.title = UiTheme.centeredLabel("Create Account", UiTheme.TITLE_FONT.deriveFont(1, 32.0F), UiTheme.TEXT_BLUE);
+        this.registerForm.add(this.title);
+        JLabel subtitle = UiTheme.centeredLabel("Join our community of pet lovers", UiTheme.BODY_FONT, UiTheme.TEXT_GRAY);
+        subtitle.setName("subtitle");
+        this.registerForm.add(subtitle);
+        this.username = new FloatingInput("Username", false);
+        this.registerForm.add(this.username);
+        this.email = new FloatingInput("Email", false);
+        this.registerForm.add(this.email);
+        this.pass = new FloatingInput("Password", true);
+        this.registerForm.add(this.pass);
+        this.confirm = new FloatingInput("Confirm Password", true);
+        this.registerForm.add(this.confirm);
+        this.register = UiTheme.pillButton("SIGN UP", UiTheme.BLUE, Color.WHITE, 14);
+        this.register.addActionListener((e) -> onRegister.register(this.username, this.email, this.pass, this.confirm));
+        this.registerForm.add(this.register);
     }
 
-    @Override
     public void doLayout() {
-        int width = Math.max(getWidth(), DEFAULT_WIDTH);
-        int height = Math.max(getHeight(), DEFAULT_HEIGHT);
-        int half = width / 2;
-        int rightWidth = width - half;
+        int width = this.getWidth();
+        int height = this.getHeight();
+        int leftWidth = (int)((double)width * 0.45);
+        int rightWidth = width - leftWidth;
         float scale = UiTheme.layoutScale(width, height);
-        int fieldWidth = UiTheme.scaled(FIELD_WIDTH, scale);
-        int fieldHeight = UiTheme.scaled(FIELD_HEIGHT, scale);
-        int buttonHeight = UiTheme.scaled(30, scale);
-        int titleHeight = UiTheme.scaled(35, scale);
-        welcomeTitle.setFont(UiTheme.scaledFont(UiTheme.TITLE_FONT, Font.BOLD, 24, scale));
-        title.setFont(UiTheme.scaledFont(UiTheme.TITLE_FONT, Font.BOLD, 24, scale));
-        note.setFont(UiTheme.scaledFont(UiTheme.BODY_FONT, Font.PLAIN, 9, scale));
-        welcomeBody.setFont(UiTheme.scaledFont(UiTheme.BODY_FONT, Font.PLAIN, 10, scale));
-        backToLogin.setFont(UiTheme.scaledFont(new Font("Arial", Font.PLAIN, 10), Font.PLAIN, 10, scale));
-        register.setFont(UiTheme.scaledFont(new Font("Arial", Font.PLAIN, 10), Font.PLAIN, 10, scale));
-        username.setUiScale(scale);
-        email.setUiScale(scale);
-        pass.setUiScale(scale);
-        confirm.setUiScale(scale);
+        this.bluePanel.setBounds(0, 0, leftWidth, height);
+        this.registerForm.setBounds(leftWidth, 0, rightWidth, height);
+        int ly = (height - UiTheme.scaled(250, scale)) / 2;
+        this.welcomeTitle.setBounds(0, ly, leftWidth, UiTheme.scaled(40, scale));
+        this.underline.setBounds((leftWidth - UiTheme.scaled(60, scale)) / 2, ly + UiTheme.scaled(45, scale), UiTheme.scaled(60, scale), 4);
+        this.welcomeBody.setBounds(20, ly + UiTheme.scaled(70, scale), leftWidth - 40, UiTheme.scaled(60, scale));
+        this.backToLogin.setBounds((leftWidth - UiTheme.scaled(180, scale)) / 2, ly + UiTheme.scaled(160, scale), UiTheme.scaled(180, scale), UiTheme.scaled(45, scale));
+        int fieldWidth = UiTheme.scaled(280, scale);
+        int fieldHeight = UiTheme.scaled(48, scale);
+        int x = (rightWidth - fieldWidth) / 2;
+        int startY = (height - UiTheme.scaled(480, scale)) / 2;
+        this.title.setBounds(0, startY, rightWidth, UiTheme.scaled(40, scale));
 
-        bluePanel.setBounds(0, 0, half, height);
-        registerForm.setBounds(half, 0, rightWidth, height);
+        for(Component c : this.registerForm.getComponents()) {
+            if ("subtitle".equals(c.getName())) {
+                c.setBounds(0, startY + UiTheme.scaled(45, scale), rightWidth, UiTheme.scaled(20, scale));
+            }
+        }
 
-        int contentY = Math.max(UiTheme.scaled(145, scale), (height - UiTheme.scaled(190, scale)) / 2);
-        welcomeTitle.setBounds(0, contentY, half, titleHeight);
-        underline.setBounds(UiTheme.centeredX(half, UiTheme.scaled(86, scale)), contentY + UiTheme.scaled(38, scale), UiTheme.scaled(86, scale), UiTheme.scaled(8, scale));
-        welcomeBody.setBounds(0, contentY + UiTheme.scaled(58, scale), half, UiTheme.scaled(68, scale));
-        backToLogin.setBounds(UiTheme.centeredX(half, fieldWidth), contentY + UiTheme.scaled(145, scale), fieldWidth, buttonHeight);
-
-        int x = UiTheme.centeredX(rightWidth, fieldWidth);
-        int startY = Math.max(UiTheme.scaled(85, scale), (height - UiTheme.scaled(385, scale)) / 2);
-        title.setBounds(0, startY, rightWidth, titleHeight);
-        note.setBounds(0, startY + UiTheme.scaled(43, scale), rightWidth, UiTheme.scaled(18, scale));
-        username.setBounds(x, startY + UiTheme.scaled(75, scale), fieldWidth, fieldHeight);
-        email.setBounds(x, startY + UiTheme.scaled(124, scale), fieldWidth, fieldHeight);
-        pass.setBounds(x, startY + UiTheme.scaled(173, scale), fieldWidth, fieldHeight);
-        confirm.setBounds(x, startY + UiTheme.scaled(222, scale), fieldWidth, fieldHeight);
-        register.setBounds(x, startY + UiTheme.scaled(282, scale), fieldWidth, buttonHeight);
+        this.username.setBounds(x, startY + UiTheme.scaled(90, scale), fieldWidth, fieldHeight);
+        this.email.setBounds(x, startY + UiTheme.scaled(150, scale), fieldWidth, fieldHeight);
+        this.pass.setBounds(x, startY + UiTheme.scaled(210, scale), fieldWidth, fieldHeight);
+        this.confirm.setBounds(x, startY + UiTheme.scaled(270, scale), fieldWidth, fieldHeight);
+        this.register.setBounds(x, startY + UiTheme.scaled(350, scale), fieldWidth, UiTheme.scaled(50, scale));
+        this.username.setUiScale(scale);
+        this.email.setUiScale(scale);
+        this.pass.setUiScale(scale);
+        this.confirm.setUiScale(scale);
     }
 }
