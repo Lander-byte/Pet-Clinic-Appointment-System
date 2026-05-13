@@ -1,4 +1,4 @@
-package PetClinic.model.user;
+package model.user;
 
 public abstract class User {
     private static int idCounter = 1000;
@@ -11,14 +11,6 @@ public abstract class User {
     private String username;
     private String password;
 
-    public User(String name) {
-        this(name, "", "", "");
-    }
-
-    public User(String name, String email, String phone, String address) {
-        this(name, email, phone, address, "", "");
-    }
-
     public User(String name, String email, String phone, String address, String username, String password) {
         this.userId  = idCounter++;
         this.name    = name;
@@ -30,16 +22,6 @@ public abstract class User {
     }
 
     public abstract String getRole();
-
-    public void displayInfo() {
-        System.out.println("-----------------------------");
-        System.out.println("Role    : " + getRole());
-        System.out.println("ID      : " + userId);
-        System.out.println("Name    : " + name);
-        System.out.println("Email   : " + email);
-        System.out.println("Phone   : " + phone);
-        System.out.println("Address : " + address);
-    }
 
     public int getUserId()           { return userId; }
     public String getName()          { return name; }
