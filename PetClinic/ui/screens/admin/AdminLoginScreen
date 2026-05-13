@@ -1,0 +1,124 @@
+package ui.screens.admin;
+
+import ui.components.FloatingInput;
+import ui.components.Logo;
+import ui.components.RoundedPanel;
+import ui.components.UiTheme;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.util.function.BiConsumer;
+
+public class AdminLoginScreen extends JPanel {
+    private static final int DEFAULT_WIDTH = 940;
+    private static final int DEFAULT_HEIGHT = 670;
+
+    private final Logo logo;
+    private final RoundedPanel loginCard;
+    private final JLabel title;
+    private final FloatingInput username;
+    private final FloatingInput password;
+    private final JButton signIn;
+
+    public AdminLoginScreen(BiConsumer<FloatingInput, FloatingInput> onLogin) {
+        setLayout(null);
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+
+        logo = new Logo(52, Color.WHITE);
+        add(logo);
+
+        loginCard = new RoundedPanel(Color.WHITE, 30) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(0, 0, 0, 20));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+                g2.dispose();
+            }
+        };
+        loginCard.setLayout(null);
+        add(loginCard);
+
+        title = UiTheme.centeredLabel("Admin Portal", UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 24f), UiTheme.TEXT_BLUE);
+        loginCard.add(title);
+
+        JLabel subtitle = UiTheme.centeredLabel("Please sign in to continue", UiTheme.BODY_FONT, UiTheme.TEXT_GRAY);
+        subtitle.setName("subtitle");
+        loginCard.add(subtitle);
+
+        username = new FloatingInput("Username", false);
+        loginCard.add(username);
+
+        password = new FloatingInput("Password", true);
+        loginCard.add(password);
+
+        username.addActionListener(e -> onLogin.accept(username, password));
+        password.addActionListener(e -> onLogin.accept(username, password));
+
+        signIn = UiTheme.pillButton("SIGN IN", UiTheme.ORANGE, Color.WHITE, 14);
+        signIn.addActionListener(e -> onLogin.accept(username, password));
+        loginCard.add(signIn);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        GradientPaint gp = new GradientPaint(0, 0, UiTheme.BLUE, getWidth(), getHeight(), UiTheme.DARK_BLUE);
+        g2.setPaint(gp);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        
+        g2.setColor(new Color(255, 255, 255, 15));
+        g2.fillOval(getWidth() - 200, -100, 400, 400);
+        g2.fillOval(-150, getHeight() - 250, 400, 400);
+        g2.dispose();
+    }
+
+    @Override
+    public void doLayout() {
+        int width = getWidth();
+        int height = getHeight();
+        float scale = UiTheme.layoutScale(width, height);
+
+        int logoWidth = UiTheme.scaled(280, scale);
+        int logoHeight = UiTheme.scaled(100, scale);
+        logo.setBounds((width - logoWidth) / 2, UiTheme.scaled(80, scale), logoWidth, logoHeight);
+
+        int cardWidth = UiTheme.scaled(320, scale);
+        int cardHeight = UiTheme.scaled(380, scale);
+        int cardX = (width - cardWidth) / 2;
+        int cardY = logo.getY() + logoHeight + UiTheme.scaled(40, scale);
+        loginCard.setBounds(cardX, cardY, cardWidth, cardHeight);
+
+        title.setBounds(0, UiTheme.scaled(40, scale), cardWidth, UiTheme.scaled(40, scale));
+        
+        for (java.awt.Component c : loginCard.getComponents()) {
+            if ("subtitle".equals(c.getName())) {
+                c.setBounds(0, UiTheme.scaled(75, scale), cardWidth, UiTheme.scaled(20, scale));
+            }
+        }
+
+        int fieldWidth = UiTheme.scaled(260, scale);
+        int fieldHeight = UiTheme.scaled(50, scale);
+        int fieldX = (cardWidth - fieldWidth) / 2;
+
+        username.setBounds(fieldX, UiTheme.scaled(120, scale), fieldWidth, fieldHeight);
+        password.setBounds(fieldX, UiTheme.scaled(185, scale), fieldWidth, fieldHeight);
+        signIn.setBounds(fieldX, UiTheme.scaled(270, scale), fieldWidth, UiTheme.scaled(50, scale));
+        
+        username.setUiScale(scale);
+        password.setUiScale(scale);
+    }
+}
