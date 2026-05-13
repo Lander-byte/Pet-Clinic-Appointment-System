@@ -1,12 +1,7 @@
-package PetClinic.model.user;
+package model.user;
 
 public class Veterinarian extends User {
     private String specialization;
-
-    public Veterinarian(String name, String specialization) {
-        super(name);
-        this.specialization = specialization;
-    }
 
     public Veterinarian(String name, String specialization, String username, String password) {
         super(name, "", "", "", username, password);
