@@ -1,4 +1,4 @@
-package PetClinic.model.user;
+package model.user;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,14 +18,14 @@ public class UserAccountStore {
         String cleanEmail = clean(email);
         String cleanPassword = password == null ? "" : password;
 
-        if (cleanUsername.isEmpty()) {
-            throw new IllegalArgumentException("Username is required.");
+        if (cleanUsername.length() < 3) {
+            throw new IllegalArgumentException("Username must be at least 3 characters.");
         }
-        if (cleanEmail.isEmpty()) {
-            throw new IllegalArgumentException("Email is required.");
+        if (!cleanEmail.contains("@") || !cleanEmail.contains(".")) {
+            throw new IllegalArgumentException("Please enter a valid email address.");
         }
-        if (cleanPassword.isEmpty()) {
-            throw new IllegalArgumentException("Password is required.");
+        if (cleanPassword.length() < 6) {
+            throw new IllegalArgumentException("Password must be at least 6 characters.");
         }
         if (findByUsername(customers, cleanUsername) != null) {
             throw new IllegalArgumentException("Username is already registered.");
@@ -56,29 +56,10 @@ public class UserAccountStore {
         return Collections.unmodifiableList(customers);
     }
 
-    public List<User> getAdmins() {
-        return Collections.unmodifiableList(admins);
-    }
-
     private User findByUsername(List<? extends User> users, String username) {
         for (User user : users) {
             if (user.hasUsername(username)) {
                 return user;
-            }
-        }
-        return null;
-    }
-
-    public User findByEmail(String email) {
-        String cleanEmail = clean(email);
-        for (Owner owner : customers) {
-            if (owner.getEmail().equalsIgnoreCase(cleanEmail)) {
-                return owner;
-            }
-        }
-        for (User admin : admins) {
-            if (admin.getEmail().equalsIgnoreCase(cleanEmail)) {
-                return admin;
             }
         }
         return null;
