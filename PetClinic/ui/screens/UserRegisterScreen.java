@@ -8,9 +8,7 @@ import PetClinic.ui.components.WhiteUnderline;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 
 public class UserRegisterScreen extends JPanel {
     private static final int DEFAULT_WIDTH = 940;
@@ -31,11 +29,11 @@ public class UserRegisterScreen extends JPanel {
     private final JButton register;
 
     public UserRegisterScreen(RegisterHandler onRegister, Runnable onLogin) {
-        this.setLayout((LayoutManager)null);
+        this.setLayout(null);
         this.setBackground(Color.WHITE);
         this.setPreferredSize(new Dimension(940, 670));
         this.bluePanel = new RoundedPanel(UiTheme.BLUE, 0);
-        this.bluePanel.setLayout((LayoutManager)null);
+        this.bluePanel.setLayout(null);
         this.add(this.bluePanel);
         this.welcomeTitle = UiTheme.centeredLabel("Welcome Back!", UiTheme.TITLE_FONT.deriveFont(1, 32.0F), Color.WHITE);
         this.bluePanel.add(this.welcomeTitle);
@@ -46,7 +44,7 @@ public class UserRegisterScreen extends JPanel {
         this.backToLogin = UiTheme.pillButton("SIGN IN", Color.WHITE, UiTheme.BLUE, 14);
         this.backToLogin.addActionListener((e) -> onLogin.run());
         this.bluePanel.add(this.backToLogin);
-        this.registerForm = new JPanel((LayoutManager)null);
+        this.registerForm = new JPanel(null);
         this.registerForm.setOpaque(false);
         this.add(this.registerForm);
         this.title = UiTheme.centeredLabel("Create Account", UiTheme.TITLE_FONT.deriveFont(1, 32.0F), UiTheme.TEXT_BLUE);
