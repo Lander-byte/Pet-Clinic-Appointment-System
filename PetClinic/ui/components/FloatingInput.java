@@ -46,16 +46,16 @@ public class FloatingInput extends JPanel {
         input.setFont(UiTheme.BODY_FONT.deriveFont(14f));
         input.setOpaque(false);
         input.setCaretColor(UiTheme.BLUE);
-        
+
         label = new JLabel(labelText);
         label.setFont(UiTheme.BODY_FONT.deriveFont((float)RESTING_SIZE));
         label.setForeground(UiTheme.TEXT_GRAY);
 
-        add(label); 
-        
+        add(label);
+
         if (input instanceof JPasswordField) {
             ((JPasswordField) input).setEchoChar('•');
-            
+
             eyeButton = new JButton() {
                 @Override
                 protected void paintComponent(Graphics g) {
@@ -64,7 +64,7 @@ public class FloatingInput extends JPanel {
                     g2.setColor(passwordVisible ? UiTheme.BLUE : UiTheme.TEXT_GRAY);
                     int w = getWidth();
                     int h = getHeight();
-                    
+
                     int eyeW = 16;
                     int eyeH = 10;
                     int eyeX = (w - eyeW) / 2;
@@ -74,7 +74,7 @@ public class FloatingInput extends JPanel {
                     g2.drawArc(eyeX, eyeY, eyeW, eyeH, 0, 180);
                     g2.drawArc(eyeX, eyeY, eyeW, eyeH, 180, 180);
                     g2.fillOval(w/2 - 2, h/2 - 2, 4, 4);
-                    
+
                     if (!passwordVisible) {
                         g2.drawLine(eyeX + 2, eyeY + 2, eyeX + eyeW - 2, eyeY + eyeH - 2);
                     }
@@ -87,7 +87,7 @@ public class FloatingInput extends JPanel {
             eyeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             eyeButton.addActionListener(e -> togglePasswordVisibility());
             add(eyeButton);
-            
+
             input.setBorder(BorderFactory.createEmptyBorder(15, 12, 0, 40));
         }
         add(input);
@@ -104,6 +104,10 @@ public class FloatingInput extends JPanel {
             @Override public void removeUpdate(DocumentEvent e) { updateActiveState(); }
             @Override public void changedUpdate(DocumentEvent e) { updateActiveState(); }
         });
+    }
+
+    public void addActionListener(java.awt.event.ActionListener l) {
+        input.addActionListener(l);
     }
 
     @Override
@@ -129,6 +133,11 @@ public class FloatingInput extends JPanel {
         return input.getText();
     }
 
+    public void setText(String text) {
+        input.setText(text);
+        updateActiveState();
+    }
+
     public void clear() {
         input.setText("");
         updateActiveState();
@@ -150,7 +159,7 @@ public class FloatingInput extends JPanel {
         if (eyeButton != null) {
             int size = UiTheme.scaled(24, uiScale);
             int x = getWidth() - size - UiTheme.scaled(8, uiScale);
-            int y = (getHeight() - size) / 2 + UiTheme.scaled(6, uiScale);
+            int y = (getHeight() - size) / 2;
             eyeButton.setBounds(x, y, size, size);
         }
         layoutFloatingLabel();
@@ -196,11 +205,11 @@ public class FloatingInput extends JPanel {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
+
         // Darker field color for better contrast
         g2.setColor(new Color(235, 235, 235));
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 12, 12);
-        
+
         // Border
         if (input.hasFocus()) {
             g2.setStroke(new BasicStroke(1.5f));
