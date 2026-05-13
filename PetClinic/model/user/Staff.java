@@ -1,12 +1,7 @@
-package PetClinic.model.user;
+package model.user;
 
 public class Staff extends User {
     private String role;
-
-    public Staff(String name, String role) {
-        super(name);
-        this.role = role;
-    }
 
     public Staff(String name, String role, String username, String password) {
         super(name, "", "", "", username, password);
