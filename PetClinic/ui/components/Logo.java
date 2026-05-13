@@ -10,9 +10,16 @@ import java.awt.RenderingHints;
 
 public class Logo extends JPanel {
     private final int fontSize;
-
+    private Color firstPartColor = UiTheme.BLUE;
+    
     public Logo(int fontSize) {
         this.fontSize = fontSize;
+        setOpaque(false);
+    }
+
+    public Logo(int fontSize, Color firstPartColor) {
+        this.fontSize = fontSize;
+        this.firstPartColor = firstPartColor;
         setOpaque(false);
     }
 
