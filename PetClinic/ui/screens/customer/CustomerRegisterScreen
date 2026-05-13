@@ -1,0 +1,134 @@
+package ui.screens.customer;
+
+import ui.components.FloatingInput;
+import ui.components.RoundedPanel;
+import ui.components.UiTheme;
+import ui.components.WhiteUnderline;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+
+public class CustomerRegisterScreen extends JPanel {
+    private static final int DEFAULT_WIDTH = 940;
+    private static final int DEFAULT_HEIGHT = 670;
+    private static final int FIELD_WIDTH = 280;
+    private static final int FIELD_HEIGHT = 48;
+
+    private final JPanel bluePanel;
+    private final JPanel registerForm;
+    private final JLabel welcomeTitle;
+    private final WhiteUnderline underline;
+    private final JLabel welcomeBody;
+    private final JButton backToLogin;
+    private final JLabel title;
+    private final FloatingInput username;
+    private final FloatingInput email;
+    private final FloatingInput pass;
+    private final FloatingInput confirm;
+    private final JButton register;
+
+    public CustomerRegisterScreen(RegisterHandler onRegister, Runnable onLogin) {
+        setLayout(null);
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+
+        bluePanel = new RoundedPanel(UiTheme.BLUE, 0);
+        bluePanel.setLayout(null);
+        add(bluePanel);
+
+        welcomeTitle = UiTheme.centeredLabel("Welcome Back!", UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 32f), Color.WHITE);
+        bluePanel.add(welcomeTitle);
+
+        underline = new WhiteUnderline();
+        bluePanel.add(underline);
+
+        welcomeBody = UiTheme.centeredLabel("<html><div style='text-align:center;'>To keep connected with us please<br>login with your personal info.</div></html>",
+                UiTheme.BODY_FONT.deriveFont(14f), Color.WHITE);
+        bluePanel.add(welcomeBody);
+
+        backToLogin = UiTheme.pillButton("SIGN IN", Color.WHITE, UiTheme.BLUE, 14);
+        backToLogin.addActionListener(e -> onLogin.run());
+        bluePanel.add(backToLogin);
+
+        registerForm = new JPanel(null);
+        registerForm.setOpaque(false);
+        add(registerForm);
+
+        title = UiTheme.centeredLabel("Create Account", UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 32f), UiTheme.TEXT_BLUE);
+        registerForm.add(title);
+
+        JLabel subtitle = UiTheme.centeredLabel("Join our community of pet lovers", UiTheme.BODY_FONT, UiTheme.TEXT_GRAY);
+        subtitle.setName("subtitle");
+        registerForm.add(subtitle);
+
+        username = new FloatingInput("Username", false);
+        registerForm.add(username);
+
+        email = new FloatingInput("Email", false);
+        registerForm.add(email);
+
+        pass = new FloatingInput("Password", true);
+        registerForm.add(pass);
+
+        confirm = new FloatingInput("Confirm Password", true);
+        registerForm.add(confirm);
+
+        java.awt.event.ActionListener regAction = e -> onRegister.register(username, email, pass, confirm);
+        username.addActionListener(regAction);
+        email.addActionListener(regAction);
+        pass.addActionListener(regAction);
+        confirm.addActionListener(regAction);
+
+        register = UiTheme.pillButton("SIGN UP", UiTheme.BLUE, Color.WHITE, 14);
+        register.addActionListener(e -> onRegister.register(username, email, pass, confirm));
+        registerForm.add(register);
+    }
+
+    @Override
+    public void doLayout() {
+        int width = getWidth();
+        int height = getHeight();
+        int leftWidth = (int)(width * 0.45);
+        int rightWidth = width - leftWidth;
+        float scale = UiTheme.layoutScale(width, height);
+
+        bluePanel.setBounds(0, 0, leftWidth, height);
+        registerForm.setBounds(leftWidth, 0, rightWidth, height);
+
+        // Left Panel (Welcome)
+        int ly = (height - UiTheme.scaled(250, scale)) / 2;
+        welcomeTitle.setBounds(0, ly, leftWidth, UiTheme.scaled(40, scale));
+        underline.setBounds((leftWidth - UiTheme.scaled(60, scale)) / 2, ly + UiTheme.scaled(45, scale), UiTheme.scaled(60, scale), 4);
+        welcomeBody.setBounds(20, ly + UiTheme.scaled(70, scale), leftWidth - 40, UiTheme.scaled(60, scale));
+        backToLogin.setBounds((leftWidth - UiTheme.scaled(180, scale)) / 2, ly + UiTheme.scaled(160, scale), UiTheme.scaled(180, scale), UiTheme.scaled(45, scale));
+
+        // Right Panel (Form)
+        int fieldWidth = UiTheme.scaled(FIELD_WIDTH, scale);
+        int fieldHeight = UiTheme.scaled(FIELD_HEIGHT, scale);
+        int x = (rightWidth - fieldWidth) / 2;
+        int startY = (height - UiTheme.scaled(480, scale)) / 2;
+
+        title.setBounds(0, startY, rightWidth, UiTheme.scaled(40, scale));
+        for(java.awt.Component c : registerForm.getComponents()) {
+            if("subtitle".equals(c.getName())) {
+                c.setBounds(0, startY + UiTheme.scaled(45, scale), rightWidth, UiTheme.scaled(20, scale));
+            }
+        }
+
+        username.setBounds(x, startY + UiTheme.scaled(90, scale), fieldWidth, fieldHeight);
+        email.setBounds(x, startY + UiTheme.scaled(150, scale), fieldWidth, fieldHeight);
+        pass.setBounds(x, startY + UiTheme.scaled(210, scale), fieldWidth, fieldHeight);
+        confirm.setBounds(x, startY + UiTheme.scaled(270, scale), fieldWidth, fieldHeight);
+        
+        register.setBounds(x, startY + UiTheme.scaled(350, scale), fieldWidth, UiTheme.scaled(50, scale));
+
+        username.setUiScale(scale);
+        email.setUiScale(scale);
+        pass.setUiScale(scale);
+        confirm.setUiScale(scale);
+    }
+}
