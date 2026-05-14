@@ -1,5 +1,7 @@
 package PetClinic.ui.components;
 
+import PetClinic.model.user.User;
+
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -13,25 +15,34 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.util.function.Consumer;
 
 public class Sidebar extends JPanel {
     private static final int COLLAPSED = 70;
-    private final String adminDashboardTarget;
-    private static final int EXPANDED = 200;
+    private static final int EXPANDED = 220;
 
     private final Consumer<String> navigator;
     private final String landingTarget;
     private final SmallSidebarLogo logo;
+    private final boolean admin;
+    private final User user;
     private boolean expanded;
     private Timer timer;
     private String activeTab = "Overview";
 
-    public Sidebar(Consumer<String> navigator, String adminDashboardTarget, String landingTarget) {
+    public Sidebar(boolean admin, Consumer<String> navigator, String landingTarget) {
+        this(null, admin, navigator, landingTarget);
+    }
+
+    public Sidebar(User user, Consumer<String> navigator, String landingTarget) {
+        this(user, true, navigator, landingTarget);
+    }
+
+    private Sidebar(User user, boolean admin, Consumer<String> navigator, String landingTarget) {
+        this.admin = admin;
+        this.user = user;
         this.navigator = navigator;
-        this.adminDashboardTarget = adminDashboardTarget;
         this.landingTarget = landingTarget;
         setLayout(null);
         setBackground(UiTheme.BLUE);
@@ -42,39 +53,73 @@ public class Sidebar extends JPanel {
     }
 
     private void addMenuItems() {
-        add(sideButton(new SidebarIcon(IconType.MENU), "", 24, "toggle"));
-        add(sideButton(new SidebarIcon(IconType.DASHBOARD), "Dashboard", 110, "Overview"));
-        add(sideButton(new SidebarIcon(IconType.CALENDAR), "Appointments", 165, "Appointments"));
-        add(sideButton(new SidebarIcon(IconType.CUSTOMER), "Customers", 220, "Customers"));
-        add(sideButton(new SidebarIcon(IconType.SETTINGS), "Settings", 275, "Settings"));
+        // Menu toggle at the top
+        add(sideButton(new SidebarIcon(IconType.MENU), "", 25, "toggle"));
+
+        // Profile section
+        add(sideButton(new SidebarIcon(IconType.PROFILE), "Profile", 175, "Profile"));
+
+        // Navigation items
+        add(sideButton(new SidebarIcon(IconType.DASHBOARD), "Dashboard", 240, "Overview"));
+        add(sideButton(new SidebarIcon(IconType.CALENDAR), "Appointments", 295, "Appointments"));
+
+        if (admin) {
+            int y = 350;
+            if (isVeterinarian()) {
+                add(sideButton(new SidebarIcon(IconType.CLINICAL), "Treatment Plans", y, "Treatment Plans"));
+                y += 55;
+            }
+            if (isStaff()) {
+                add(sideButton(new SidebarIcon(IconType.BILLING), "Billing", y, "Billing"));
+                y += 55;
+                add(sideButton(new SidebarIcon(IconType.SERVICE), "Services", y, "Services"));
+                y += 55;
+                add(sideButton(new SidebarIcon(IconType.CUSTOMER), "Customers", y, "Customers"));
+                y += 55;
+            }
+            add(sideButton(new SidebarIcon(IconType.SETTINGS), "Settings", y, "Settings"));
+        } else {
+            // Shift Settings up if Customers is hidden
+            add(sideButton(new SidebarIcon(IconType.SETTINGS), "Settings", 350, "Settings"));
+        }
+
+        // Logout pinned to bottom
         add(sideButton(new SidebarIcon(IconType.LOGOUT), "Logout", 580, landingTarget));
+    }
+
+    private boolean isVeterinarian() {
+        return user != null && "Veterinarian".equalsIgnoreCase(user.getRole());
+    }
+
+    private boolean isStaff() {
+        return user != null && "Staff".equalsIgnoreCase(user.getRole());
     }
 
     private JButton sideButton(Icon icon, String text, int y, String target) {
         JButton button = new JButton(text, icon) {
             @Override
             protected void paintComponent(Graphics g) {
-                if (text.equals(activeTab) || (text.isEmpty() && expanded)) {
-                   Graphics2D g2 = (Graphics2D) g.create();
-                   g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                   g2.setColor(new Color(255, 255, 255, 40));
-                   g2.fillRoundRect(5, 0, getWidth() - 10, getHeight(), 12, 12);
-                   g2.dispose();
+                if (text.equals(activeTab) || ("".equals(text) && "toggle".equals(target))) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setColor(new Color(255, 255, 255, 35));
+                    g2.fillRoundRect(8, 0, getWidth() - 16, getHeight(), 12, 12);
+                    g2.dispose();
                 }
                 super.paintComponent(g);
             }
         };
         button.putClientProperty("label", text);
         button.putClientProperty("y", y);
-        button.setBounds(0, y, COLLAPSED, 44);
+        button.setBounds(0, y, COLLAPSED, 46);
         button.setHorizontalAlignment(SwingConstants.CENTER);
         button.setForeground(Color.WHITE);
         button.setFont(UiTheme.BODY_FONT.deriveFont(Font.BOLD, 14f));
-        button.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        button.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setIconTextGap(15);
+        button.setIconTextGap(18);
 
         button.addActionListener(e -> {
             if ("toggle".equals(target)) {
@@ -104,24 +149,27 @@ public class Sidebar extends JPanel {
     @Override
     public void doLayout() {
         boolean showLabels = getWidth() > COLLAPSED + 30;
+
         logo.setVisible(showLabels);
-        logo.setBounds(20, 60, 160, 40);
-        
+        logo.setBounds(25, 100, 180, 50);
+
         for (java.awt.Component component : getComponents()) {
             if (!(component instanceof JButton)) continue;
 
             JButton button = (JButton) component;
             String label = (String) button.getClientProperty("label");
             int y = (Integer) button.getClientProperty("y");
-            
-            // Adjust logout position to bottom
+
             if ("Logout".equals(label)) {
-                y = getHeight() - 80;
+                y = getHeight() - 85;
             }
-            
+
             button.setText(showLabels ? label : "");
             button.setHorizontalAlignment(showLabels ? SwingConstants.LEFT : SwingConstants.CENTER);
-            button.setBounds(showLabels ? 10 : 0, y, showLabels ? getWidth() - 20 : getWidth(), 44);
+
+            int x = showLabels ? 15 : 0;
+            int w = showLabels ? getWidth() - 30 : getWidth();
+            button.setBounds(x, y, w, 46);
         }
     }
 
@@ -136,7 +184,7 @@ public class Sidebar extends JPanel {
                 timer.stop();
                 return;
             }
-            int step = Math.max(1, Math.abs(targetWidth - width) / 4);
+            int step = Math.max(1, Math.abs(targetWidth - width) / 3);
             int next = width + (targetWidth > width ? step : -step);
             setPreferredSize(new Dimension(next, getHeight()));
             revalidate();
@@ -151,15 +199,14 @@ public class Sidebar extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(UiTheme.BLUE);
         g2.fillRect(0, 0, getWidth(), getHeight());
-        
-        // Gradient or subtle accent
-        g2.setColor(new Color(255, 255, 255, 10));
-        g2.fillRect(getWidth() - 1, 0, 1, getHeight());
-        
+
+        g2.setColor(new Color(255, 255, 255, 15));
+        g2.drawLine(getWidth() - 1, 0, getWidth() - 1, getHeight());
+
         g2.dispose();
     }
 
-    private enum IconType { MENU, DASHBOARD, CALENDAR, CUSTOMER, SETTINGS, LOGOUT }
+    private enum IconType { MENU, PROFILE, DASHBOARD, CALENDAR, CUSTOMER, SETTINGS, LOGOUT, CLINICAL, BILLING, SERVICE }
 
     private static class SmallSidebarLogo extends JPanel {
         SmallSidebarLogo() { setOpaque(false); }
@@ -167,12 +214,12 @@ public class Sidebar extends JPanel {
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            Font logoFont = UiTheme.LOGO_FONT.deriveFont(22f);
+            Font logoFont = UiTheme.LOGO_FONT.deriveFont(26f);
             g2.setFont(logoFont);
             g2.setColor(Color.WHITE);
-            g2.drawString("Care", 0, 20);
+            g2.drawString("Care", 0, 30);
             g2.setColor(UiTheme.ORANGE);
-            g2.drawString("Haven", g2.getFontMetrics().stringWidth("Care ") - 5, 20);
+            g2.drawString("Haven", g2.getFontMetrics().stringWidth("Care "), 30);
             g2.dispose();
         }
     }
@@ -180,22 +227,37 @@ public class Sidebar extends JPanel {
     private static class SidebarIcon implements Icon {
         private final IconType type;
         SidebarIcon(IconType type) { this.type = type; }
-        @Override public int getIconWidth() { return 24; }
-        @Override public int getIconHeight() { return 24; }
+        @Override public int getIconWidth() { return 26; }
+        @Override public int getIconHeight() { return 26; }
         @Override
         public void paintIcon(java.awt.Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setColor(c.getForeground());
-            g2.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(2.2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.translate(x, y);
             switch (type) {
-                case MENU -> { g2.drawLine(4, 6, 20, 6); g2.drawLine(4, 12, 20, 12); g2.drawLine(4, 18, 20, 18); }
-                case DASHBOARD -> { g2.drawOval(4, 4, 16, 16); g2.drawLine(12, 4, 12, 12); g2.drawLine(12, 12, 18, 12); }
-                case CALENDAR -> { g2.drawRoundRect(4, 6, 16, 14, 2, 2); g2.drawLine(4, 10, 20, 10); g2.drawLine(8, 4, 8, 8); g2.drawLine(16, 4, 16, 8); }
-                case CUSTOMER -> { g2.drawOval(7, 5, 10, 10); g2.drawArc(4, 15, 16, 10, 0, 180); }
-                case SETTINGS -> { g2.drawOval(8, 8, 8, 8); g2.drawOval(4, 4, 16, 16); }
-                case LOGOUT -> { g2.drawArc(4, 4, 16, 16, 135, 270); g2.drawLine(12, 2, 12, 12); }
+                case MENU -> { g2.drawLine(4, 7, 22, 7); g2.drawLine(4, 13, 22, 13); g2.drawLine(4, 19, 22, 19); }
+                case PROFILE -> {
+                    g2.setStroke(new BasicStroke(1.5f));
+                    g2.drawOval(2, 2, 22, 22);
+                    g2.fillOval(7, 6, 12, 12);
+                    g2.drawArc(4, 15, 18, 10, 0, 180);
+                }
+                case DASHBOARD -> { g2.drawOval(4, 4, 18, 18); g2.drawLine(13, 4, 13, 13); g2.drawLine(13, 13, 19, 13); }
+                case CALENDAR -> { g2.drawRoundRect(4, 6, 18, 16, 3, 3); g2.drawLine(4, 11, 22, 11); g2.drawLine(9, 4, 9, 8); g2.drawLine(17, 4, 17, 8); }
+                case CUSTOMER -> { g2.drawOval(8, 5, 10, 10); g2.drawArc(5, 16, 16, 10, 0, 180); }
+                case CLINICAL -> { g2.drawOval(6, 6, 14, 14); g2.drawLine(13, 8, 13, 18); g2.drawLine(8, 13, 18, 13); }
+                case BILLING -> { g2.drawRect(6, 4, 14, 18); g2.drawLine(9, 9, 17, 9); g2.drawLine(9, 13, 17, 13); g2.drawLine(9, 17, 14, 17); }
+                case SERVICE -> { g2.drawRoundRect(5, 6, 16, 14, 3, 3); g2.drawLine(9, 10, 17, 10); g2.drawLine(9, 15, 17, 15); }
+                case SETTINGS -> {
+                    g2.drawOval(9, 9, 8, 8);
+                    for(int i=0; i<8; i++) {
+                        double angle = Math.toRadians(i*45);
+                        g2.drawLine((int)(13+Math.cos(angle)*8), (int)(13+Math.sin(angle)*8), (int)(13+Math.cos(angle)*11), (int)(13+Math.sin(angle)*11));
+                    }
+                }
+                case LOGOUT -> { g2.drawArc(5, 5, 16, 16, 135, 270); g2.drawLine(13, 3, 13, 13); }
             }
             g2.dispose();
         }

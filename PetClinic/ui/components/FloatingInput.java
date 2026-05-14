@@ -21,6 +21,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class FloatingInput extends JPanel {
+    private static final char PASSWORD_ECHO_CHAR = '\u2022';
     private static final int RESTING_Y = 12;
     private static final int FLOATING_Y = 4;
     private static final int RESTING_SIZE = 12;
@@ -54,7 +55,7 @@ public class FloatingInput extends JPanel {
         add(label);
 
         if (input instanceof JPasswordField) {
-            ((JPasswordField) input).setEchoChar('•');
+            ((JPasswordField) input).setEchoChar(PASSWORD_ECHO_CHAR);
 
             eyeButton = new JButton() {
                 @Override
@@ -123,7 +124,7 @@ public class FloatingInput extends JPanel {
     private void togglePasswordVisibility() {
         if (input instanceof JPasswordField) {
             passwordVisible = !passwordVisible;
-            ((JPasswordField) input).setEchoChar(passwordVisible ? (char) 0 : '•');
+            ((JPasswordField) input).setEchoChar(passwordVisible ? (char) 0 : PASSWORD_ECHO_CHAR);
             eyeButton.repaint();
         }
     }

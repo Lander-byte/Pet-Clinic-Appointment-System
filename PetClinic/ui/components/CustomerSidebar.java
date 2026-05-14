@@ -20,7 +20,7 @@ import java.util.function.Consumer;
  * Sidebar for the customer-facing dashboard.
  *
  * Nav items:
- *   Home | Appointments | My Pets | Settings | Logout
+ *   Home | Profile | Appointments | My Pets | Payments | Settings | Logout
  */
 public class CustomerSidebar extends JPanel {
 
@@ -46,9 +46,11 @@ public class CustomerSidebar extends JPanel {
     private void addMenuItems() {
         add(navButton(IconType.MENU,         "",             24,  "toggle"));
         add(navButton(IconType.HOME,         "Home",        110,  "Home"));
-        add(navButton(IconType.CALENDAR,     "Appointments",165,  "Appointments"));
-        add(navButton(IconType.PETS,         "My Pets",     220,  "My Pets"));
-        add(navButton(IconType.SETTINGS,     "Settings",    275,  "Settings"));
+        add(navButton(IconType.PROFILE,      "Profile",     165,  "Profile"));
+        add(navButton(IconType.CALENDAR,     "Appointments",220,  "Appointments"));
+        add(navButton(IconType.PETS,         "My Pets",     275,  "My Pets"));
+        add(navButton(IconType.PAYMENTS,     "Payments",    330,  "Payments"));
+        add(navButton(IconType.SETTINGS,     "Settings",    385,  "Settings"));
         add(navButton(IconType.LOGOUT,       "Logout",      999,  logoutTarget));  // pinned to bottom
     }
 
@@ -146,7 +148,7 @@ public class CustomerSidebar extends JPanel {
 
     // ── Icon types ────────────────────────────────────────────────────
 
-    private enum IconType { MENU, HOME, CALENDAR, PETS, SETTINGS, LOGOUT }
+    private enum IconType { MENU, HOME, PROFILE, CALENDAR, PETS, PAYMENTS, SETTINGS, LOGOUT }
 
     // ── Inner classes ─────────────────────────────────────────────────
 
@@ -182,15 +184,17 @@ public class CustomerSidebar extends JPanel {
                 case MENU     -> { g2.drawLine(4,6,20,6); g2.drawLine(4,12,20,12); g2.drawLine(4,18,20,18); }
                 // House
                 case HOME     -> { g2.drawPolygon(new int[]{12,3,21}, new int[]{3,11,11}, 3);
-                                   g2.drawRect(7,11,10,10); g2.drawRect(9,15,6,6); }
+                    g2.drawRect(7,11,10,10); g2.drawRect(9,15,6,6); }
+                case PROFILE  -> { g2.drawOval(7,4,10,10); g2.drawArc(4,15,16,8,0,180); }
                 // Calendar
                 case CALENDAR -> { g2.drawRoundRect(4,6,16,14,2,2); g2.drawLine(4,10,20,10);
-                                   g2.drawLine(8,4,8,8); g2.drawLine(16,4,16,8); }
+                    g2.drawLine(8,4,8,8); g2.drawLine(16,4,16,8); }
                 // Paw print (simplified)
                 case PETS     -> { g2.fillOval(11,4,4,4); g2.fillOval(5,7,3,3);
-                                   g2.fillOval(16,7,3,3); g2.fillOval(7,10,3,4);
-                                   g2.fillOval(14,10,3,4);
-                                   g2.fillOval(9,13,6,6); }
+                    g2.fillOval(16,7,3,3); g2.fillOval(7,10,3,4);
+                    g2.fillOval(14,10,3,4);
+                    g2.fillOval(9,13,6,6); }
+                case PAYMENTS -> { g2.drawRect(5,5,14,16); g2.drawLine(8,10,16,10); g2.drawLine(8,15,14,15); }
                 // Gear
                 case SETTINGS -> { g2.drawOval(8,8,8,8); g2.drawOval(4,4,16,16); }
                 // Power/logout arrow

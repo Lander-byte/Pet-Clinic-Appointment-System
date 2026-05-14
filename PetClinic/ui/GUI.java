@@ -1,13 +1,13 @@
 package PetClinic.ui;
 
 import PetClinic.model.user.User;
-import PetClinic.model.user.UserAccountStore;
+import PetClinic.service.ClinicService;
 import PetClinic.ui.components.FloatingInput;
-import PetClinic.ui.screens.AdminLoginScreen;
-import PetClinic.ui.screens.DashboardScreen;
-import PetClinic.ui.screens.LandingScreen;
-import PetClinic.ui.screens.UserLoginScreen;
-import PetClinic.ui.screens.UserRegisterScreen;
+import PetClinic.ui.screens.admin.AdminLoginScreen;
+import PetClinic.ui.screens.admin.DashboardScreen;
+import PetClinic.ui.screens.admin.LandingScreen;
+import PetClinic.ui.screens.customer.CustomerLoginScreen;
+import PetClinic.ui.screens.customer.CustomerRegisterScreen;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,7 +31,7 @@ public class GUI {
     private JFrame frame;
     private CardLayout cardLayout;
     private JPanel cards;
-    private final UserAccountStore accountStore = new UserAccountStore();
+    private final ClinicService clinicService = new ClinicService();
     private User currentUser;
 
     public void launch() {
@@ -52,13 +52,13 @@ public class GUI {
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
         cards.add(centerCanvas(new LandingScreen(() -> show(USER_LOGIN))), LANDING);
-        cards.add(new UserLoginScreen(this::loginCustomer, () -> show(USER_REGISTER), () -> show(ADMIN_LOGIN)), USER_LOGIN);
-        cards.add(new UserRegisterScreen(this::registerCustomer, () -> show(USER_LOGIN)), USER_REGISTER);
+        cards.add(new CustomerLoginScreen(this::loginCustomer, () -> show(USER_REGISTER), () -> show(ADMIN_LOGIN)), USER_LOGIN);
+        cards.add(new CustomerRegisterScreen(this::registerCustomer, () -> show(USER_LOGIN)), USER_REGISTER);
         cards.add(new AdminLoginScreen(this::loginAdmin), ADMIN_LOGIN);
-        
-        // Updated Dashboard instances with the new 3-argument constructor
-        cards.add(new DashboardScreen(true, this::show, ADMIN_DASHBOARD, LANDING), ADMIN_DASHBOARD);
-        cards.add(new DashboardScreen(false, this::show, USER_DASHBOARD, LANDING), USER_DASHBOARD);
+
+        // Dashboard placeholders (will be updated on login)
+        // We add them with null user initially just to have the keys in CardLayout if needed,
+        // but better to add them dynamically to ensure the User object is fresh.
 
         frame.setContentPane(cards);
         frame.pack();
@@ -78,15 +78,26 @@ public class GUI {
     }
 
     private void loginCustomer(FloatingInput username, FloatingInput password) {
-        User user = accountStore.authenticateCustomer(username.getText(), password.getText());
+        String u = username.getText().trim();
+        String p = password.getText();
+
+        if (u.isEmpty() || p.isEmpty()) {
+            showMessage("Login failed", "Please enter both username and password.", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        User user = clinicService.getAccountStore().authenticateCustomer(u, p);
         if (user == null) {
-            showMessage("Login failed", "Please enter a registered customer username and password.", JOptionPane.ERROR_MESSAGE);
+            showMessage("Login failed", "Invalid username or password.", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         currentUser = user;
         username.clear();
         password.clear();
+
+        // Recreate dashboard for the specific user
+        cards.add(new DashboardScreen(currentUser, clinicService, false, this::show, LANDING), USER_DASHBOARD);
         show(USER_DASHBOARD);
     }
 
@@ -98,7 +109,7 @@ public class GUI {
         }
 
         try {
-            accountStore.registerCustomer(username.getText(), email.getText(), passwordText);
+            clinicService.getAccountStore().registerCustomer(username.getText(), email.getText(), passwordText);
             username.clear();
             email.clear();
             password.clear();
@@ -111,7 +122,15 @@ public class GUI {
     }
 
     private void loginAdmin(FloatingInput username, FloatingInput password) {
-        User user = accountStore.authenticateAdmin(username.getText(), password.getText());
+        String u = username.getText().trim();
+        String p = password.getText();
+
+        if (u.isEmpty() || p.isEmpty()) {
+            showMessage("Login failed", "Please enter both username and password.", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        User user = clinicService.getAccountStore().authenticateAdmin(u, p);
         if (user == null) {
             showMessage("Admin login failed", "Use a staff or veterinarian account.", JOptionPane.ERROR_MESSAGE);
             return;
@@ -120,6 +139,9 @@ public class GUI {
         currentUser = user;
         username.clear();
         password.clear();
+
+        // Recreate dashboard for the specific admin
+        cards.add(new DashboardScreen(currentUser, clinicService, true, this::show, LANDING), ADMIN_DASHBOARD);
         show(ADMIN_DASHBOARD);
     }
 

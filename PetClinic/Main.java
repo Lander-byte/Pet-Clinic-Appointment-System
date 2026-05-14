@@ -23,14 +23,13 @@ public class  Main {
         new GUI().launch();
 
         // ── STEVEN: Create a pet ──────────────────────────────
-        Owner owner = new Owner("Maria", "0917-555-1234");
+        Owner owner = new Owner("Maria", "maria@gmail.com",  "0917-555-1234", "Labangon", "maria", "maria123");
         Pet pet = new Pet("Doggo", Species.MAMMAL, owner);
         MedicalHistory history = new MedicalHistory(pet);
 
-
         // ── ROJ: Create clinic staff ───────────────────────────
-        Veterinarian vet = new Veterinarian("Dr. Smith", "smith@clinic.com");
-        Staff staff = new Staff("Jane", "jane@clinic.com");
+        Veterinarian vet = new Veterinarian("Dr. Smith", "Clinical Descipline", "vet","vet123" );
+        Staff staff = new Staff("Jane", "Admin", "staff", "staff123");
 
         // ── SAIRA: Set up schedule & book appointment ──────────
         Schedule schedule = new Schedule(vet);
@@ -45,7 +44,6 @@ public class  Main {
 
         Medication med = new Medication("Amoxicillin", "250mg twice daily", 7);
         Procedure procedure = new Procedure("Ear Cleaning", "Performed with antiseptic solution");
-
         treatmentPlan.addMedication(med);
         treatmentPlan.addProcedure(procedure);
 

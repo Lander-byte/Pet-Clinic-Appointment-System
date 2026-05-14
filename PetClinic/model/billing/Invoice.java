@@ -16,19 +16,15 @@ public class Invoice {
     public Appointment getAppointment() {
         return appointment;
     }
-
     public Service getService() {
         return service;
     }
-
     public double getTotalAmount() {
         return service.getPrice();
     }
-
     public boolean isPaid() {
         return paid;
     }
-
     public void markAsPaid() {
         this.paid = true;
     }

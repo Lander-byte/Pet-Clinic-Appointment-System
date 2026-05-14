@@ -9,21 +9,24 @@ import java.awt.Cursor;
 import java.awt.Font;
 
 public final class UiTheme {
-    //main color area
+    // Brand Colors
     public static final Color BLUE = new Color(0, 88, 128);
     public static final Color LIGHT_BLUE = new Color(235, 248, 255);
     public static final Color DARK_BLUE = new Color(0, 58, 85);
     public static final Color ORANGE = new Color(255, 129, 69);
-    //bg color area
+
+    // UI Neutrals
     public static final Color BG_WHITE = Color.WHITE;
     public static final Color BG_LIGHT = new Color(248, 249, 250);
     public static final Color BORDER = new Color(230, 230, 230);
     public static final Color FIELD = new Color(242, 242, 242);
-    //text color area
+
+    // Text Colors
     public static final Color TEXT_MAIN = new Color(33, 37, 41);
     public static final Color TEXT_BLUE = new Color(0, 73, 117);
     public static final Color TEXT_GRAY = new Color(108, 117, 125);
-    //font styles area
+
+    // Modern Typography
     public static final Font LOGO_FONT = new Font("Lilita One", Font.BOLD, 88);
     public static final Font TITLE_FONT = new Font("Segoe UI", Font.BOLD, 26);
     public static final Font SUBTITLE_FONT = new Font("Segoe UI", Font.BOLD, 18);
