@@ -1,9 +1,9 @@
-package ui.screens.admin;
+package PetClinic.ui.screens.admin;
 
-import model.user.User;
-import ui.components.FloatingInput;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.model.user.User;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 import javax.swing.*;
 import java.awt.*;
