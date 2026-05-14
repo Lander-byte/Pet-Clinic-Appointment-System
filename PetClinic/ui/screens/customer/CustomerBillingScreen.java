@@ -1,11 +1,11 @@
-package ui.screens.customer;
+package PetClinic.ui.screens.customer;
 
-import model.billing.Invoice;
-import model.user.Owner;
-import model.user.User;
-import service.ClinicService;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.model.billing.Invoice;
+import PetClinic.model.user.Owner;
+import PetClinic.model.user.User;
+import PetClinic.service.ClinicService;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
