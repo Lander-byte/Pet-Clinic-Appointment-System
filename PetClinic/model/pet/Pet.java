@@ -1,6 +1,6 @@
-package model.pet;
+package PetClinic.model.pet;
 
-import model.user.Owner;
+import PetClinic.model.user.Owner;
 
 public class Pet {
     private String name;
