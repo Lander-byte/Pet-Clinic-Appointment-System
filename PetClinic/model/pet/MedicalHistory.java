@@ -1,6 +1,6 @@
-package model.pet;
+package PetClinic.model.pet;
 
-import model.clinical.TreatmentPlan;
+import PetClinic.model.clinical.TreatmentPlan;
 
 import java.util.ArrayList;
 import java.util.List;
