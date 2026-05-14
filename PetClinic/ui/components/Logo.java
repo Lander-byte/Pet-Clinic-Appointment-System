@@ -11,7 +11,7 @@ import java.awt.RenderingHints;
 public class Logo extends JPanel {
     private final int fontSize;
     private Color firstPartColor = UiTheme.BLUE;
-    
+
     public Logo(int fontSize) {
         this.fontSize = fontSize;
         setOpaque(false);
@@ -32,21 +32,21 @@ public class Logo extends JPanel {
 
         Font logoFont = UiTheme.LOGO_FONT.deriveFont((float) fontSize);
         g2.setFont(logoFont);
-        
+
         String firstPart = "Care";
         String secondPart = "Haven";
-        
+
         int careWidth = g2.getFontMetrics().stringWidth(firstPart);
         int havenWidth = g2.getFontMetrics().stringWidth(secondPart);
         int totalWidth = careWidth + havenWidth;
-        
+
         int x = (getWidth() - totalWidth) / 2;
         int y = (getHeight() + g2.getFontMetrics().getAscent() - g2.getFontMetrics().getDescent()) / 2 - (fontSize / 4);
 
         // Draw "Care"
-        g2.setColor(UiTheme.BLUE);
+        g2.setColor(firstPartColor);
         g2.drawString(firstPart, x, y);
-        
+
         // Draw "Haven"
         g2.setColor(UiTheme.ORANGE);
         g2.drawString(secondPart, x + careWidth, y);
@@ -58,7 +58,7 @@ public class Logo extends JPanel {
         int subtitleWidth = g2.getFontMetrics().stringWidth(subtitle);
         int sx = (getWidth() - subtitleWidth) / 2;
         int sy = y + (fontSize / 3) + 10;
-        
+
         g2.setColor(UiTheme.TEXT_GRAY);
         g2.drawString(subtitle, sx, sy);
 

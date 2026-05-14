@@ -79,7 +79,7 @@ public class AdminLoginScreen extends JPanel {
         GradientPaint gp = new GradientPaint(0, 0, UiTheme.BLUE, getWidth(), getHeight(), UiTheme.DARK_BLUE);
         g2.setPaint(gp);
         g2.fillRect(0, 0, getWidth(), getHeight());
-        
+
         g2.setColor(new Color(255, 255, 255, 15));
         g2.fillOval(getWidth() - 200, -100, 400, 400);
         g2.fillOval(-150, getHeight() - 250, 400, 400);
@@ -103,7 +103,7 @@ public class AdminLoginScreen extends JPanel {
         loginCard.setBounds(cardX, cardY, cardWidth, cardHeight);
 
         title.setBounds(0, UiTheme.scaled(40, scale), cardWidth, UiTheme.scaled(40, scale));
-        
+
         for (java.awt.Component c : loginCard.getComponents()) {
             if ("subtitle".equals(c.getName())) {
                 c.setBounds(0, UiTheme.scaled(75, scale), cardWidth, UiTheme.scaled(20, scale));
@@ -117,7 +117,7 @@ public class AdminLoginScreen extends JPanel {
         username.setBounds(fieldX, UiTheme.scaled(120, scale), fieldWidth, fieldHeight);
         password.setBounds(fieldX, UiTheme.scaled(185, scale), fieldWidth, fieldHeight);
         signIn.setBounds(fieldX, UiTheme.scaled(270, scale), fieldWidth, UiTheme.scaled(50, scale));
-        
+
         username.setUiScale(scale);
         password.setUiScale(scale);
     }
