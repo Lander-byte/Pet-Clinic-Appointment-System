@@ -1,8 +1,8 @@
-package ui.screens.customer;
+package PetClinic.ui.screens.customer;
 
-import ui.components.FloatingInput;
+import PetClinic.ui.components.FloatingInput;
 
 @FunctionalInterface
 public interface RegisterHandler {
-    void register(FloatingInput var1, FloatingInput var2, FloatingInput var3, FloatingInput var4);
+    void register(FloatingInput username, FloatingInput email, FloatingInput password, FloatingInput confirm);
 }
