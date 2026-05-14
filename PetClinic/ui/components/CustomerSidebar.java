@@ -116,10 +116,12 @@ public class CustomerSidebar extends JPanel {
     public void doLayout() {
         boolean wide = this.getWidth() > 100;
 
+
+
         for(Component c : this.getComponents()) {
             if (c instanceof SmallSidebarLogo logo) {
                 logo.setVisible(wide);
-                logo.setBounds(20, 60, 160, 40);
+                logo.setBounds(20, 75, 160, 40);
             } else if (c instanceof JButton btn) {
                 String label = (String)btn.getClientProperty("label");
                 int y = (Integer)btn.getClientProperty("y");
