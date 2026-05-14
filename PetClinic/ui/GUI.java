@@ -1,13 +1,13 @@
-package ui;
+package PetClinic.ui;
 
-import model.user.User;
-import service.ClinicService;
-import ui.components.FloatingInput;
-import ui.screens.admin.AdminLoginScreen;
-import ui.screens.admin.DashboardScreen;
-import ui.screens.admin.LandingScreen;
-import ui.screens.customer.CustomerLoginScreen;
-import ui.screens.customer.CustomerRegisterScreen;
+import PetClinic.model.user.User;
+import PetClinic.service.ClinicService;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.screens.admin.AdminLoginScreen;
+import PetClinic.ui.screens.admin.DashboardScreen;
+import PetClinic.ui.screens.admin.LandingScreen;
+import PetClinic.ui.screens.customer.CustomerLoginScreen;
+import PetClinic.ui.screens.customer.CustomerRegisterScreen;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

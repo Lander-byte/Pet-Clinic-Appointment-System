@@ -1,4 +1,4 @@
-package ui.screens.customer;
+package PetClinic.ui.screens.customer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -14,10 +14,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import ui.components.FloatingInput;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
-import ui.components.WhiteUnderline;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
+import PetClinic.ui.components.WhiteUnderline;
 
 public class CustomerLoginScreen extends JPanel {
     private static final int DEFAULT_WIDTH = 940;

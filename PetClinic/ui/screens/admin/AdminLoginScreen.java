@@ -1,4 +1,4 @@
-package ui.screens.admin;
+package PetClinic.ui.screens.admin;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -14,10 +14,10 @@ import java.util.function.BiConsumer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import ui.components.FloatingInput;
-import ui.components.Logo;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.ui.components.FloatingInput;
+import PetClinic.ui.components.Logo;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 public class AdminLoginScreen extends JPanel {
     private static final int DEFAULT_WIDTH = 940;
