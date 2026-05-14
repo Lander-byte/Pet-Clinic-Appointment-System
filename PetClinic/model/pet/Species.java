@@ -1,6 +1,8 @@
 package PetClinic.model.pet;
 
 public enum Species {
+    DOG,
+    CAT,
     AQUATIC,    // fish, turtles, frogs, etc.
     MAMMAL,     // rabbits, hamsters, guinea pigs, etc.
     BIRD,       // parrots, ducks, chickens, etc.

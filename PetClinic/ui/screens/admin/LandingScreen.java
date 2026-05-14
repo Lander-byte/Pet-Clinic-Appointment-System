@@ -1,8 +1,8 @@
-package ui.screens.admin;
+package PetClinic.ui.screens.admin;
 
-import ui.components.Logo;
-import ui.components.UiTheme;
-import ui.components.RoundedPanel;
+import PetClinic.ui.components.Logo;
+import PetClinic.ui.components.UiTheme;
+import PetClinic.ui.components.RoundedPanel;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;

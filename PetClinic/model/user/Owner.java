@@ -1,4 +1,4 @@
-package model.user;
+package PetClinic.model.user;
 
 public class Owner extends User {
     public Owner(String name, String email, String phone, String address, String username, String password) {

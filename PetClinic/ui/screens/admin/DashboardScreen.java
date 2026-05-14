@@ -1,19 +1,19 @@
-package ui.screens.admin;
+package PetClinic.ui.screens.admin;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.function.Consumer;
 import javax.swing.JPanel;
-import model.user.User;
-import service.ClinicService;
-import ui.components.CustomerSidebar;
-import ui.components.Sidebar;
-import ui.screens.customer.CustomerAppointmentScreen;
-import ui.screens.customer.CustomerBillingScreen;
-import ui.screens.customer.CustomerHomeScreen;
-import ui.screens.customer.CustomerPetsScreen;
-import ui.screens.customer.CustomersScreen;
+import PetClinic.model.user.User;
+import PetClinic.service.ClinicService;
+import PetClinic.ui.components.CustomerSidebar;
+import PetClinic.ui.components.Sidebar;
+import PetClinic.ui.screens.customer.CustomerAppointmentScreen;
+import PetClinic.ui.screens.customer.CustomerBillingScreen;
+import PetClinic.ui.screens.customer.CustomerHomeScreen;
+import PetClinic.ui.screens.customer.CustomerPetsScreen;
+import PetClinic.ui.screens.customer.CustomersScreen;
 
 public class DashboardScreen extends JPanel {
     private final CardLayout cardLayout;

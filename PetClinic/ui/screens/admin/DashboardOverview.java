@@ -1,4 +1,4 @@
-package ui.screens.admin;
+package PetClinic.ui.screens.admin;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,12 +15,12 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import model.billing.Invoice;
-import model.scheduling.Appointment;
-import model.user.User;
-import service.ClinicService;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.model.billing.Invoice;
+import PetClinic.model.scheduling.Appointment;
+import PetClinic.model.user.User;
+import PetClinic.service.ClinicService;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 public class DashboardOverview extends JPanel {
     private final ClinicService clinicService;

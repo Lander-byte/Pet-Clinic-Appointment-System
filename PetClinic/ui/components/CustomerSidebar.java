@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package ui.components;
+package PetClinic.ui.components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

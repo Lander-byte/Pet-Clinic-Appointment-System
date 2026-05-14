@@ -1,164 +1,140 @@
-package PetClinic.ui.screens;
+package PetClinic.ui.screens.customer;
 
+import PetClinic.model.pet.Species;
+import PetClinic.model.user.Owner;
+import PetClinic.model.user.User;
+import PetClinic.service.ClinicService;
+import PetClinic.ui.components.FloatingInput;
 import PetClinic.ui.components.RoundedPanel;
 import PetClinic.ui.components.UiTheme;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 
-/**
- * Home screen for logged-in customers.
- * Shows a welcome banner, quick stats, and their upcoming appointments.
- */
 public class CustomerHomeScreen extends JPanel {
+    private final Owner owner;
+    private final ClinicService clinicService;
 
-    public CustomerHomeScreen() {
+    private final FloatingInput petName;
+    private final FloatingInput date;
+    private final FloatingInput time;
+    private final FloatingInput reason;
+    private final JComboBox<String> species;
+
+    public CustomerHomeScreen(User user, ClinicService clinicService) {
+        this.owner = user instanceof Owner ? (Owner) user : null;
+        this.clinicService = clinicService;
+
         setLayout(new BorderLayout(0, 28));
         setBackground(UiTheme.BG_LIGHT);
         setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
-        add(buildHeader(), BorderLayout.NORTH);
-        add(buildCenter(), BorderLayout.CENTER);
+        JPanel header = new JPanel(new GridLayout(2, 1, 0, 4));
+        header.setOpaque(false);
+        JLabel title = new JLabel("Book Appointment");
+        title.setFont(UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 28f));
+        title.setForeground(UiTheme.TEXT_BLUE);
+        JLabel subtitle = new JLabel("Send a schedule request for admin approval");
+        subtitle.setFont(UiTheme.BODY_FONT);
+        subtitle.setForeground(UiTheme.TEXT_GRAY);
+        header.add(title);
+        header.add(subtitle);
+        add(header, BorderLayout.NORTH);
+
+        RoundedPanel formCard = new RoundedPanel(Color.WHITE, 24);
+        formCard.setLayout(new GridBagLayout());
+        formCard.setBorder(BorderFactory.createEmptyBorder(28, 28, 28, 28));
+
+        petName = new FloatingInput("Pet Name", false);
+        date = new FloatingInput("Date (YYYY-MM-DD)", false);
+        time = new FloatingInput("Preferred Time (e.g. 10:00 AM)", false);
+        reason = new FloatingInput("Reason for Visit", false);
+        species = new JComboBox<>(new String[]{"Dog", "Cat", "Bird", "Aquatic", "Mammal", "Farm Animal"});
+        species.setFont(UiTheme.BODY_FONT);
+        species.setPreferredSize(new Dimension(220, 50));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(0, 0, 18, 18);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+
+        gbc.gridx = 0; gbc.gridy = 0;
+        formCard.add(petName, gbc);
+        gbc.gridx = 1;
+        formCard.add(species, gbc);
+        gbc.gridx = 0; gbc.gridy = 1;
+        formCard.add(date, gbc);
+        gbc.gridx = 1;
+        formCard.add(time, gbc);
+        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
+        formCard.add(reason, gbc);
+
+        JButton bookButton = UiTheme.pillButton("Book Appointment", UiTheme.ORANGE, Color.WHITE, 14);
+        bookButton.setPreferredSize(new Dimension(190, 46));
+        bookButton.addActionListener(e -> bookAppointment());
+
+        JPanel actions = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        actions.setOpaque(false);
+        actions.add(bookButton);
+
+        gbc.gridy = 3;
+        gbc.insets = new Insets(12, 0, 0, 0);
+        formCard.add(actions, gbc);
+
+        add(formCard, BorderLayout.CENTER);
     }
 
-    // ── Header ─────────────────────────────────────────────────────────
+    private void bookAppointment() {
+        if (owner == null) {
+            JOptionPane.showMessageDialog(this, "Only customers can book appointments.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    private JPanel buildHeader() {
-        RoundedPanel banner = new RoundedPanel(UiTheme.BLUE, 20);
-        banner.setLayout(new BorderLayout(20, 0));
-        banner.setBorder(BorderFactory.createEmptyBorder(28, 32, 28, 32));
-        banner.setPreferredSize(new Dimension(0, 110));
+        String petValue = petName.getText().trim();
+        String dateValue = date.getText().trim();
+        String timeValue = time.getText().trim();
+        String reasonValue = reason.getText().trim();
 
-        JPanel text = new JPanel(new GridLayout(2, 1, 0, 6));
-        text.setOpaque(false);
+        if (petValue.isEmpty() || dateValue.isEmpty() || timeValue.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Pet name, date, and time are required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        JLabel title = new JLabel("Welcome back!");
-        title.setFont(UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 26f));
-        title.setForeground(Color.WHITE);
+        try {
+            clinicService.requestAppointment(owner, petValue, selectedSpecies(), dateValue, timeValue, reasonValue);
+            petName.clear();
+            date.clear();
+            time.clear();
+            reason.clear();
 
-        JLabel sub = new JLabel("Here's a summary of your upcoming vet appointments.");
-        sub.setFont(UiTheme.BODY_FONT.deriveFont(13f));
-        sub.setForeground(new Color(255, 255, 255, 200));
-
-        text.add(title);
-        text.add(sub);
-        banner.add(text, BorderLayout.CENTER);
-
-        JButton bookBtn = UiTheme.pillButton("+ Book Appointment", UiTheme.ORANGE, Color.WHITE, 12);
-        bookBtn.setPreferredSize(new Dimension(180, 42));
-        banner.add(bookBtn, BorderLayout.EAST);
-
-        return banner;
+            JOptionPane.showMessageDialog(this,
+                    "Appointment request sent. Check Appointments for status updates.",
+                    "Appointment Requested",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Validation Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    // ── Center ─────────────────────────────────────────────────────────
-
-    private JPanel buildCenter() {
-        JPanel center = new JPanel(new BorderLayout(0, 28));
-        center.setOpaque(false);
-
-        // Stats row
-        JPanel stats = new JPanel(new GridLayout(1, 3, 20, 0));
-        stats.setOpaque(false);
-        stats.setPreferredSize(new Dimension(0, 90));
-        stats.add(statCard("Upcoming",    "2",  UiTheme.BLUE));
-        stats.add(statCard("Completed",   "5",  new Color(39, 174, 96)));
-        stats.add(statCard("Registered Pets", "2", UiTheme.ORANGE));
-        center.add(stats, BorderLayout.NORTH);
-
-        // Upcoming appointments table
-        center.add(buildAppointmentTable(), BorderLayout.CENTER);
-
-        return center;
-    }
-
-    private JPanel statCard(String label, String value, Color color) {
-        RoundedPanel card = new RoundedPanel(Color.WHITE, 18);
-        card.setLayout(new BorderLayout(10, 0));
-        card.setBorder(BorderFactory.createEmptyBorder(16, 20, 16, 20));
-
-        JPanel stripe = new JPanel();
-        stripe.setBackground(color);
-        stripe.setPreferredSize(new Dimension(5, 0));
-        card.add(stripe, BorderLayout.WEST);
-
-        JPanel info = new JPanel(new GridLayout(2, 1, 0, 2));
-        info.setOpaque(false);
-
-        JLabel val = new JLabel(value);
-        val.setFont(UiTheme.TITLE_FONT.deriveFont(Font.BOLD, 24f));
-        val.setForeground(color);
-
-        JLabel lbl = new JLabel(label);
-        lbl.setFont(UiTheme.BODY_FONT.deriveFont(11f));
-        lbl.setForeground(UiTheme.TEXT_GRAY);
-
-        info.add(val);
-        info.add(lbl);
-        card.add(info, BorderLayout.CENTER);
-        return card;
-    }
-
-    private JPanel buildAppointmentTable() {
-        RoundedPanel card = new RoundedPanel(Color.WHITE, 20);
-        card.setLayout(new BorderLayout());
-        card.setBorder(BorderFactory.createEmptyBorder(22, 22, 22, 22));
-
-        JLabel title = new JLabel("Your Upcoming Appointments");
-        title.setFont(UiTheme.SUBTITLE_FONT);
-        title.setForeground(UiTheme.TEXT_MAIN);
-        title.setBorder(BorderFactory.createEmptyBorder(0, 0, 14, 0));
-        card.add(title, BorderLayout.NORTH);
-
-        String[] cols = {"Date", "Time", "Pet", "Reason", "Vet", "Status"};
-        Object[][] data = {
-            {"2025-06-10", "09:00 AM", "Buddy",  "Annual Checkup",  "Dr. Smith", "Confirmed"},
-            {"2025-06-18", "02:30 PM", "Misty",  "Vaccination",     "Dr. Smith", "Pending"},
-        };
-
-        DefaultTableModel model = new DefaultTableModel(data, cols) {
-            @Override public boolean isCellEditable(int r, int c) { return false; }
-        };
-
-        JTable table = new JTable(model);
-        table.setRowHeight(48);
-        table.setShowGrid(false);
-        table.setIntercellSpacing(new Dimension(0, 0));
-        table.setFont(UiTheme.BODY_FONT);
-        table.getTableHeader().setFont(UiTheme.BODY_FONT.deriveFont(Font.BOLD));
-        table.getTableHeader().setBackground(new Color(250, 251, 252));
-        table.getTableHeader().setForeground(UiTheme.TEXT_GRAY);
-        table.getTableHeader().setPreferredSize(new Dimension(0, 40));
-        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, UiTheme.BORDER));
-
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable t, Object v,
-                    boolean sel, boolean foc, int row, int col) {
-                super.getTableCellRendererComponent(t, v, sel, foc, row, col);
-                setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 12));
-                setBackground(sel ? UiTheme.LIGHT_BLUE : Color.WHITE);
-                if (col == 5) {
-                    String s = String.valueOf(v);
-                    setForeground("Confirmed".equals(s) ? new Color(39,174,96) : UiTheme.ORANGE);
-                    setFont(UiTheme.BODY_FONT.deriveFont(Font.BOLD, 12f));
-                } else {
-                    setForeground(UiTheme.TEXT_MAIN);
-                    setFont(UiTheme.BODY_FONT);
-                }
-                return this;
-            }
-        };
-        for (int i = 0; i < table.getColumnCount(); i++)
-            table.getColumnModel().getColumn(i).setCellRenderer(renderer);
-
-        JScrollPane scroll = new JScrollPane(table);
-        scroll.setBorder(null);
-        scroll.getViewport().setBackground(Color.WHITE);
-        card.add(scroll, BorderLayout.CENTER);
-
-        return card;
+    private Species selectedSpecies() {
+        String value = String.valueOf(species.getSelectedItem()).toUpperCase().replace(" ", "_");
+        try {
+            return Species.valueOf(value);
+        } catch (IllegalArgumentException ex) {
+            return Species.DOG;
+        }
     }
 }

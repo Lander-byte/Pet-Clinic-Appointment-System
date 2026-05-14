@@ -1,4 +1,4 @@
-package model.user;
+package PetClinic.model.user;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,6 +60,21 @@ public class UserAccountStore {
         for (User user : users) {
             if (user.hasUsername(username)) {
                 return user;
+            }
+        }
+        return null;
+    }
+
+    public User findByEmail(String email) {
+        String cleanEmail = clean(email);
+        for (Owner owner : customers) {
+            if (owner.getEmail().equalsIgnoreCase(cleanEmail)) {
+                return owner;
+            }
+        }
+        for (User admin : admins) {
+            if (admin.getEmail().equalsIgnoreCase(cleanEmail)) {
+                return admin;
             }
         }
         return null;

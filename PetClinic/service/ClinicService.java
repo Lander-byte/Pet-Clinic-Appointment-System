@@ -13,7 +13,7 @@ import PetClinic.model.scheduling.Appointment;
 import PetClinic.model.scheduling.Timeslot;
 import PetClinic.model.user.Owner;
 import PetClinic.model.user.User;
-import model.user.UserAccountStore;
+import PetClinic.model.user.UserAccountStore;
 import PetClinic.model.user.Veterinarian;
 
 import java.time.LocalDate;

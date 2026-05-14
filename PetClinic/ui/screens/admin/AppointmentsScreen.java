@@ -1,10 +1,10 @@
-package ui.screens.admin;
+package PetClinic.ui.screens.admin;
 
-import model.scheduling.Appointment;
-import model.user.User;
-import service.ClinicService;
-import ui.components.RoundedPanel;
-import ui.components.UiTheme;
+import PetClinic.model.scheduling.Appointment;
+import PetClinic.model.user.User;
+import PetClinic.service.ClinicService;
+import PetClinic.ui.components.RoundedPanel;
+import PetClinic.ui.components.UiTheme;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
