@@ -1,13 +1,13 @@
-package PetClinic.ui;
+package ui;
 
-import PetClinic.model.user.User;
-import PetClinic.service.ClinicService;
-import PetClinic.ui.components.FloatingInput;
-import PetClinic.ui.screens.admin.AdminLoginScreen;
-import PetClinic.ui.screens.admin.DashboardScreen;
-import PetClinic.ui.screens.admin.LandingScreen;
-import PetClinic.ui.screens.customer.CustomerLoginScreen;
-import PetClinic.ui.screens.customer.CustomerRegisterScreen;
+import model.user.User;
+import service.ClinicService;
+import ui.components.FloatingInput;
+import ui.screens.admin.AdminLoginScreen;
+import ui.screens.admin.DashboardScreen;
+import ui.screens.admin.LandingScreen;
+import ui.screens.customer.CustomerLoginScreen;
+import ui.screens.customer.CustomerRegisterScreen;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -52,13 +52,9 @@ public class GUI {
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
         cards.add(centerCanvas(new LandingScreen(() -> show(USER_LOGIN))), LANDING);
-        cards.add(new CustomerLoginScreen(this::loginCustomer, () -> show(USER_REGISTER), () -> show(ADMIN_LOGIN)), USER_LOGIN);
+        cards.add(new CustomerLoginScreen(this::loginCustomer, () -> show(USER_REGISTER), () -> show(ADMIN_LOGIN), () -> show(LANDING)), USER_LOGIN);
         cards.add(new CustomerRegisterScreen(this::registerCustomer, () -> show(USER_LOGIN)), USER_REGISTER);
-        cards.add(new AdminLoginScreen(this::loginAdmin), ADMIN_LOGIN);
-
-        // Dashboard placeholders (will be updated on login)
-        // We add them with null user initially just to have the keys in CardLayout if needed,
-        // but better to add them dynamically to ensure the User object is fresh.
+        cards.add(new AdminLoginScreen(this::loginAdmin, () -> show(USER_LOGIN)), ADMIN_LOGIN);
 
         frame.setContentPane(cards);
         frame.pack();
@@ -80,7 +76,7 @@ public class GUI {
     private void loginCustomer(FloatingInput username, FloatingInput password) {
         String u = username.getText().trim();
         String p = password.getText();
-
+        
         if (u.isEmpty() || p.isEmpty()) {
             showMessage("Login failed", "Please enter both username and password.", JOptionPane.WARNING_MESSAGE);
             return;
@@ -95,7 +91,7 @@ public class GUI {
         currentUser = user;
         username.clear();
         password.clear();
-
+        
         // Recreate dashboard for the specific user
         cards.add(new DashboardScreen(currentUser, clinicService, false, this::show, LANDING), USER_DASHBOARD);
         show(USER_DASHBOARD);
@@ -139,7 +135,7 @@ public class GUI {
         currentUser = user;
         username.clear();
         password.clear();
-
+        
         // Recreate dashboard for the specific admin
         cards.add(new DashboardScreen(currentUser, clinicService, true, this::show, LANDING), ADMIN_DASHBOARD);
         show(ADMIN_DASHBOARD);
