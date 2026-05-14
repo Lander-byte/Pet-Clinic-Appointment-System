@@ -1,5 +1,22 @@
-package PetClinic.ui.components;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
 
+package ui.components;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LayoutManager;
+import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.util.Objects;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -7,26 +24,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class FloatingInput extends JPanel {
-    private static final char PASSWORD_ECHO_CHAR = '\u2022';
+    private static final char PASSWORD_ECHO_CHAR = '•';
     private static final int RESTING_Y = 12;
     private static final int FLOATING_Y = 4;
     private static final int RESTING_SIZE = 12;
     private static final int FLOATING_SIZE = 10;
-
     private final JTextField input;
     private final JLabel label;
     private final Timer animation;
@@ -34,193 +41,207 @@ public class FloatingInput extends JPanel {
     private boolean passwordVisible = false;
     private boolean active;
     private float progress;
-    private float uiScale = 1f;
+    private float uiScale = 1.0F;
 
     public FloatingInput(String labelText, boolean secure) {
-        setLayout(null);
-        setOpaque(false);
+        this.setLayout((LayoutManager)null);
+        this.setOpaque(false);
+        this.input = (JTextField)(secure ? new JPasswordField() : new JTextField());
+        this.input.setBorder(BorderFactory.createEmptyBorder(15, 12, 0, 12));
+        this.input.setBackground(new Color(0, 0, 0, 0));
+        this.input.setForeground(UiTheme.TEXT_MAIN);
+        this.input.setFont(UiTheme.BODY_FONT.deriveFont(14.0F));
+        this.input.setOpaque(false);
+        this.input.setCaretColor(UiTheme.BLUE);
+        this.label = new JLabel(labelText);
+        this.label.setFont(UiTheme.BODY_FONT.deriveFont(12.0F));
+        this.label.setForeground(UiTheme.TEXT_GRAY);
+        this.add(this.label);
+        if (this.input instanceof JPasswordField) {
+            ((JPasswordField)this.input).setEchoChar('•');
+            this.eyeButton = new JButton() {
+                {
+                    Objects.requireNonNull(FloatingInput.this);
+                }
 
-        input = secure ? new JPasswordField() : new JTextField();
-        input.setBorder(BorderFactory.createEmptyBorder(15, 12, 0, 12));
-        input.setBackground(new Color(0, 0, 0, 0));
-        input.setForeground(UiTheme.TEXT_MAIN);
-        input.setFont(UiTheme.BODY_FONT.deriveFont(14f));
-        input.setOpaque(false);
-        input.setCaretColor(UiTheme.BLUE);
-
-        label = new JLabel(labelText);
-        label.setFont(UiTheme.BODY_FONT.deriveFont((float)RESTING_SIZE));
-        label.setForeground(UiTheme.TEXT_GRAY);
-
-        add(label);
-
-        if (input instanceof JPasswordField) {
-            ((JPasswordField) input).setEchoChar(PASSWORD_ECHO_CHAR);
-
-            eyeButton = new JButton() {
-                @Override
                 protected void paintComponent(Graphics g) {
-                    Graphics2D g2 = (Graphics2D) g.create();
+                    Graphics2D g2 = (Graphics2D)g.create();
                     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    g2.setColor(passwordVisible ? UiTheme.BLUE : UiTheme.TEXT_GRAY);
-                    int w = getWidth();
-                    int h = getHeight();
-
+                    g2.setColor(FloatingInput.this.passwordVisible ? UiTheme.BLUE : UiTheme.TEXT_GRAY);
+                    int w = this.getWidth();
+                    int h = this.getHeight();
                     int eyeW = 16;
                     int eyeH = 10;
                     int eyeX = (w - eyeW) / 2;
                     int eyeY = (h - eyeH) / 2;
-
-                    g2.setStroke(new BasicStroke(1.5f));
+                    g2.setStroke(new BasicStroke(1.5F));
                     g2.drawArc(eyeX, eyeY, eyeW, eyeH, 0, 180);
                     g2.drawArc(eyeX, eyeY, eyeW, eyeH, 180, 180);
-                    g2.fillOval(w/2 - 2, h/2 - 2, 4, 4);
-
-                    if (!passwordVisible) {
+                    g2.fillOval(w / 2 - 2, h / 2 - 2, 4, 4);
+                    if (!FloatingInput.this.passwordVisible) {
                         g2.drawLine(eyeX + 2, eyeY + 2, eyeX + eyeW - 2, eyeY + eyeH - 2);
                     }
+
                     g2.dispose();
                 }
             };
-            eyeButton.setBorder(null);
-            eyeButton.setContentAreaFilled(false);
-            eyeButton.setFocusPainted(false);
-            eyeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            eyeButton.addActionListener(e -> togglePasswordVisibility());
-            add(eyeButton);
-
-            input.setBorder(BorderFactory.createEmptyBorder(15, 12, 0, 40));
+            this.eyeButton.setBorder((Border)null);
+            this.eyeButton.setContentAreaFilled(false);
+            this.eyeButton.setFocusPainted(false);
+            this.eyeButton.setCursor(Cursor.getPredefinedCursor(12));
+            this.eyeButton.addActionListener((e) -> this.togglePasswordVisibility());
+            this.add(this.eyeButton);
+            this.input.setBorder(BorderFactory.createEmptyBorder(15, 12, 0, 40));
         }
-        add(input);
 
-        animation = new Timer(10, e -> animateLabel());
-        input.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) { updateActiveState(); repaint(); }
-            @Override
-            public void focusLost(FocusEvent e) { updateActiveState(); repaint(); }
+        this.add(this.input);
+        this.animation = new Timer(10, (e) -> this.animateLabel());
+        this.input.addFocusListener(new FocusAdapter() {
+            {
+                Objects.requireNonNull(FloatingInput.this);
+            }
+
+            public void focusGained(FocusEvent e) {
+                FloatingInput.this.updateActiveState();
+                FloatingInput.this.repaint();
+            }
+
+            public void focusLost(FocusEvent e) {
+                FloatingInput.this.updateActiveState();
+                FloatingInput.this.repaint();
+            }
         });
-        input.getDocument().addDocumentListener(new DocumentListener() {
-            @Override public void insertUpdate(DocumentEvent e) { updateActiveState(); }
-            @Override public void removeUpdate(DocumentEvent e) { updateActiveState(); }
-            @Override public void changedUpdate(DocumentEvent e) { updateActiveState(); }
+        this.input.getDocument().addDocumentListener(new DocumentListener() {
+            {
+                Objects.requireNonNull(FloatingInput.this);
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                FloatingInput.this.updateActiveState();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                FloatingInput.this.updateActiveState();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                FloatingInput.this.updateActiveState();
+            }
         });
     }
 
-    public void addActionListener(java.awt.event.ActionListener l) {
-        input.addActionListener(l);
+    public void addActionListener(ActionListener l) {
+        this.input.addActionListener(l);
     }
 
-    @Override
     public Dimension getPreferredSize() {
-        return new Dimension(200, UiTheme.scaled(54, uiScale));
+        return new Dimension(200, UiTheme.scaled(54, this.uiScale));
     }
 
-    @Override
     public Dimension getMinimumSize() {
-        return getPreferredSize();
+        return this.getPreferredSize();
     }
 
     private void togglePasswordVisibility() {
-        if (input instanceof JPasswordField) {
-            passwordVisible = !passwordVisible;
-            ((JPasswordField) input).setEchoChar(passwordVisible ? (char) 0 : PASSWORD_ECHO_CHAR);
-            eyeButton.repaint();
+        if (this.input instanceof JPasswordField) {
+            this.passwordVisible = !this.passwordVisible;
+            ((JPasswordField)this.input).setEchoChar((char)(this.passwordVisible ? '\u0000' : '•'));
+            this.eyeButton.repaint();
         }
+
     }
 
     public String getText() {
-        if (input instanceof JPasswordField) return new String(((JPasswordField) input).getPassword());
-        return input.getText();
+        return this.input instanceof JPasswordField ? new String(((JPasswordField)this.input).getPassword()) : this.input.getText();
     }
 
     public void setText(String text) {
-        input.setText(text);
-        updateActiveState();
+        this.input.setText(text);
+        this.updateActiveState();
     }
 
     public void clear() {
-        input.setText("");
-        updateActiveState();
+        this.input.setText("");
+        this.updateActiveState();
     }
 
     public void setUiScale(float uiScale) {
         this.uiScale = uiScale;
         int horizontalPadding = UiTheme.scaled(12, uiScale);
         int topPadding = UiTheme.scaled(15, uiScale);
-        int rightPadding = (input instanceof JPasswordField) ? UiTheme.scaled(40, uiScale) : horizontalPadding;
-        input.setBorder(BorderFactory.createEmptyBorder(topPadding, horizontalPadding, 0, rightPadding));
-        input.setFont(UiTheme.scaledFont(UiTheme.BODY_FONT, Font.PLAIN, 14, uiScale));
-        layoutFloatingLabel();
+        int rightPadding = this.input instanceof JPasswordField ? UiTheme.scaled(40, uiScale) : horizontalPadding;
+        this.input.setBorder(BorderFactory.createEmptyBorder(topPadding, horizontalPadding, 0, rightPadding));
+        this.input.setFont(UiTheme.scaledFont(UiTheme.BODY_FONT, 0, 14, uiScale));
+        this.layoutFloatingLabel();
     }
 
-    @Override
     public void doLayout() {
-        input.setBounds(0, 0, getWidth(), getHeight());
-        if (eyeButton != null) {
-            int size = UiTheme.scaled(24, uiScale);
-            int x = getWidth() - size - UiTheme.scaled(8, uiScale);
-            int y = (getHeight() - size) / 2;
-            eyeButton.setBounds(x, y, size, size);
+        this.input.setBounds(0, 0, this.getWidth(), this.getHeight());
+        if (this.eyeButton != null) {
+            int size = UiTheme.scaled(24, this.uiScale);
+            int x = this.getWidth() - size - UiTheme.scaled(8, this.uiScale);
+            int y = (this.getHeight() - size) / 2;
+            this.eyeButton.setBounds(x, y, size, size);
         }
-        layoutFloatingLabel();
+
+        this.layoutFloatingLabel();
     }
 
     private void updateActiveState() {
-        boolean shouldFloat = input.hasFocus() || !input.getText().isEmpty();
-        if (active == shouldFloat) return;
-        active = shouldFloat;
-        if (!animation.isRunning()) animation.start();
+        boolean shouldFloat = this.input.hasFocus() || !this.input.getText().isEmpty();
+        if (this.active != shouldFloat) {
+            this.active = shouldFloat;
+            if (!this.animation.isRunning()) {
+                this.animation.start();
+            }
+
+        }
     }
 
     private void animateLabel() {
-        float target = active ? 1f : 0f;
-        if (Math.abs(progress - target) < 0.01f) {
-            progress = target;
-            animation.stop();
+        float target = this.active ? 1.0F : 0.0F;
+        if (Math.abs(this.progress - target) < 0.01F) {
+            this.progress = target;
+            this.animation.stop();
         } else {
-            progress += progress < target ? 0.15f : -0.15f;
-            progress = Math.max(0f, Math.min(1f, progress));
+            this.progress += this.progress < target ? 0.15F : -0.15F;
+            this.progress = Math.max(0.0F, Math.min(1.0F, this.progress));
         }
-        layoutFloatingLabel();
-        repaint();
+
+        this.layoutFloatingLabel();
+        this.repaint();
     }
 
     private void layoutFloatingLabel() {
-        int y = Math.round((RESTING_Y + ((FLOATING_Y - RESTING_Y) * progress)) * uiScale);
-        float size = (RESTING_SIZE + ((FLOATING_SIZE - RESTING_SIZE) * progress)) * uiScale;
-        label.setFont(UiTheme.BODY_FONT.deriveFont(size));
-        int horizontalPadding = UiTheme.scaled(12, uiScale);
-        label.setBounds(horizontalPadding, y, getWidth() - (horizontalPadding * 2), UiTheme.scaled(18, uiScale));
-        label.setForeground(blend(UiTheme.TEXT_GRAY, UiTheme.BLUE, progress));
+        int y = Math.round((12.0F + -8.0F * this.progress) * this.uiScale);
+        float size = (12.0F + -2.0F * this.progress) * this.uiScale;
+        this.label.setFont(UiTheme.BODY_FONT.deriveFont(size));
+        int horizontalPadding = UiTheme.scaled(12, this.uiScale);
+        this.label.setBounds(horizontalPadding, y, this.getWidth() - horizontalPadding * 2, UiTheme.scaled(18, this.uiScale));
+        this.label.setForeground(this.blend(UiTheme.TEXT_GRAY, UiTheme.BLUE, this.progress));
     }
 
     private Color blend(Color from, Color to, float amount) {
-        int r = (int) (from.getRed() + (to.getRed() - from.getRed()) * amount);
-        int g = (int) (from.getGreen() + (to.getGreen() - from.getGreen()) * amount);
-        int b = (int) (from.getBlue() + (to.getBlue() - from.getBlue()) * amount);
+        int r = (int)((float)from.getRed() + (float)(to.getRed() - from.getRed()) * amount);
+        int g = (int)((float)from.getGreen() + (float)(to.getGreen() - from.getGreen()) * amount);
+        int b = (int)((float)from.getBlue() + (float)(to.getBlue() - from.getBlue()) * amount);
         return new Color(r, g, b);
     }
 
-    @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
+        Graphics2D g2 = (Graphics2D)g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Darker field color for better contrast
         g2.setColor(new Color(235, 235, 235));
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 12, 12);
-
-        // Border
-        if (input.hasFocus()) {
-            g2.setStroke(new BasicStroke(1.5f));
+        g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 12, 12);
+        if (this.input.hasFocus()) {
+            g2.setStroke(new BasicStroke(1.5F));
             g2.setColor(new Color(UiTheme.BLUE.getRed(), UiTheme.BLUE.getGreen(), UiTheme.BLUE.getBlue(), 120));
         } else {
-            g2.setStroke(new BasicStroke(1f));
+            g2.setStroke(new BasicStroke(1.0F));
             g2.setColor(new Color(210, 210, 210));
         }
-        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 12, 12);
 
+        g2.drawRoundRect(0, 0, this.getWidth() - 1, this.getHeight() - 1, 12, 12);
         g2.dispose();
         super.paintComponent(g);
     }
